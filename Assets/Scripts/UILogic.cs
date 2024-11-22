@@ -24,6 +24,7 @@ public class UILogic : MonoBehaviour
     private UIDocument escapeMenu;
     private GameObject inventoryObject;
     private GameObject hotbarObject;
+    private GameObject hotbarSelectedObject;
     private GameObject crosshairObject;
     private GameObject tachometerObject;
     private GameObject RPMObject;
@@ -88,6 +89,10 @@ public class UILogic : MonoBehaviour
                item.uiObject.SetActive(isHotbarOpen);
         
         hotbarObject.SetActive(isHotbarOpen);
+
+        var color = hotbarSelectedObject.GetComponent<UnityEngine.UI.Image>().color;
+        color.a = isHotbarOpen ? 0.2f : 0;
+        hotbarSelectedObject.GetComponent<UnityEngine.UI.Image>().color = color;
     }
     void Start()
     {
@@ -107,6 +112,8 @@ public class UILogic : MonoBehaviour
 
         questNameObject = game.quests.transform.Find("QuestName").gameObject;
         questInfoObject = game.quests.transform.Find("QuestInfo").gameObject;
+
+        hotbarSelectedObject = GameObject.Find("Selected Hotbar Item");
     }
     void Update()
     {

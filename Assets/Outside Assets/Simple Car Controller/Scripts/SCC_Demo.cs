@@ -32,7 +32,7 @@ public class SCC_Demo : MonoBehaviour {
         //  Getting all other existing vehicles and destroying them.
         if (destroyAllCars) {
 
-            SCC_Drivetrain[] cars = FindObjectsOfType<SCC_Drivetrain>();
+            SCC_Drivetrain[] cars = FindObjectsByType<SCC_Drivetrain>(FindObjectsSortMode.None);
 
             foreach (SCC_Drivetrain car in cars)
                 Destroy(car.gameObject);
@@ -40,8 +40,8 @@ public class SCC_Demo : MonoBehaviour {
         }
 
         //  Getting camera and canvas components.
-        SCC_Camera camera = FindObjectOfType<SCC_Camera>();
-        SCC_Dashboard dashboard = FindObjectOfType<SCC_Dashboard>();
+        SCC_Camera camera = FindFirstObjectByType<SCC_Camera>();
+        SCC_Dashboard dashboard = FindFirstObjectByType<SCC_Dashboard>();
 
         //  If camera found, get it's position and rotation to spawn new vehicles at that vector3.
         if (camera) {

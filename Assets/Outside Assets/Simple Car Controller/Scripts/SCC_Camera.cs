@@ -47,7 +47,6 @@ public class SCC_Camera : MonoBehaviour {
     }
 
     private void LateUpdate() {
-
         //  If there is no target vehicle, return.
         if (!playerCar)
             return;

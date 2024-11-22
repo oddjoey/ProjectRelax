@@ -28,7 +28,11 @@ public class MainMenuLogic : MonoBehaviour
     {
         uIDocument.rootVisualElement.style.display = DisplayStyle.Flex;
     }
-    private void SetupUIElements()
+    /*
+        Whenever we load a new scene, variables have new addresses so we have to find them again
+        - K
+    */
+    public void SetupUIElements()
     {
         newButton = uIDocument.rootVisualElement.Q<Button>("NewButton");
         loadButton = uIDocument.rootVisualElement.Q<Button>("LoadButton");

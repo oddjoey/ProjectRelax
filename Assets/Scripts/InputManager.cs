@@ -30,27 +30,27 @@ public class InputManager : MonoBehaviour
     private InputAction engineAction;
 
     // Player Inputs
-    public Vector2 moveDelta { get; private set; }
-    public Vector2 lookDelta { get; private set; }
-    public bool action1 { get; private set; }
-    public bool sprint { get; private set; }
-    public bool jump { get; private set; }
-    public bool use { get; private set; }
-    public bool inventory { get; private set; }
-    public bool settings { get; private set; }
+    [SerializeField] public Vector2 moveDelta;
+    [SerializeField] public Vector2 lookDelta;
+    [SerializeField] public bool action1;
+    [SerializeField] public bool sprint;
+    [SerializeField] public bool jump;
+    [SerializeField] public bool use;
+    [SerializeField] public bool inventory;
+    [SerializeField] public bool settings;
 
     // UI Inputs
-    public Vector2 navigate { get; private set; }
-    public bool submit { get; private set; }
-    public bool cancel { get; private set; }
-    public Vector2 point { get; private set; }
-    public bool leftClick { get; private set; }
-    public Vector2 scroll { get; private set; }
-    public bool middleClick { get; private set; }
-    public bool rightClick { get; private set; }
+    [SerializeField] public Vector2 navigate;
+    [SerializeField] public bool submit;
+    [SerializeField] public bool cancel;
+    [SerializeField] public Vector2 point;
+    [SerializeField] public bool leftClick;
+    [SerializeField] public Vector2 scroll;
+    [SerializeField] public bool middleClick;
+    [SerializeField] public bool rightClick;
 
     // Vehicle Inputs
-    public bool engine { get; private set; }
+    public bool engine; 
     
     // On Awake
     private void Awake()

@@ -16,7 +16,7 @@ public class SCC_Singleton<T> : MonoBehaviour where T : MonoBehaviour {
                     return m_Instance;
 
                 // Search for existing instance.
-                m_Instance = (T)FindObjectOfType(typeof(T));
+                m_Instance = (T)FindFirstObjectByType(typeof(T));
                 // Create new instance if one doesn't already exist.
                 if (m_Instance != null) return m_Instance;
                 // Need to create a new GameObject to attach the singleton to.

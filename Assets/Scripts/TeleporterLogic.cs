@@ -44,9 +44,10 @@ public class TeleporterLogic : MonoBehaviour
     }
     IEnumerator LoadMainMenuScene()
     {
-        Destroy(GameObject.Find("Car"));
-        Destroy(game.gameObject);
-        Destroy(game.localPlayer.gameObject);
+        game.mainMenu.gameObject.SetActive(false);
+        var car = GameObject.Find("Car");
+        if (car != null)
+            Destroy(car);
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu");
         
         // Wait until the asynchronous scene fully loads
@@ -54,6 +55,25 @@ public class TeleporterLogic : MonoBehaviour
         {
             yield return null;
         }
+
+        game.mainMenu.gameObject.SetActive(true);
+
+        if (game.UI.isEscapeMenuOpen)
+            game.UI.ToggleMenu();
+        if (game.UI.isInventoryMenuOpen)
+            game.UI.ToggleInventory();
+        if (game.UI.isHotbarOpen)
+            game.UI.ToggleHotbar();
+
+        game.UI.SetMinimapVisibility(false);
+        game.UI.SetCrosshairVisibility(false);
+        game.UI.SetQuestVisiblity(false);
+
+        game.mainMenu.inMainMenu = true;
+        game.localPlayer.inGameWorld = false;
+        game.localPlayer.inGarage = false;
+
+        game.mainMenu.SetupUIElements();
 
         yield return null;
     }

@@ -115,8 +115,8 @@ public class CarLogic : MonoBehaviour
     {
         bool brakesApplied = inputs.inputs.brakeInput > 0;
 
-        RLBrakeLight.intensity = brakesApplied ? 3.0f : 1.5f;
-        RRBrakeLight.intensity = brakesApplied ? 3.0f : 1.5f;
+        RLBrakeLight.intensity = brakesApplied ? 90.0f : 50.5f;
+        RRBrakeLight.intensity = brakesApplied ? 90.0f : 50.5f;
     }
 
     public void StopMoving()

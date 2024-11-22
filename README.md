@@ -2,7 +2,7 @@
 
 ## Introduction
 
-    The game introduces you to your new car, which was given to you by your mother for your 16th birthday. The game's goal is to complete the quests shown on the right of the screen. The controls are simple: WASD for player movement, Mouse for the player looking, TAB for inventory, Space to jump, F to use/interact, and ESC for the menu. When in the car, W is the accelerator, S is the brakes, A & D are for steering, E is to start the engine, and Space is for the handbrake.
+The game introduces you to your new car, which was given to you by your mother for your 16th birthday. The game's goal is to complete the quests shown on the right of the screen. The controls are simple: WASD for player movement, Mouse for the player looking, TAB for inventory, Space to jump, F to use/interact, and ESC for the menu. When in the car, W is the accelerator, S is the brakes, A & D are for steering, E is to start the engine, and Space is for the handbrake.
 ## Written Scripts
 
 ```

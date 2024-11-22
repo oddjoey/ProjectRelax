@@ -1,0 +1,19 @@
+.button {
+    top: 121px;
+    width: 624px;
+    margin-top: 39px;
+    justify-content: flex-start;
+    align-self: center;
+    height: 56px;
+    font-size: 26px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(19, 19, 19);
+}
+
+.slider {
+    color: rgb(0, 153, 255);
+    margin-top: 12px;
+    margin-right: 12px;
+    margin-bottom: 12px;
+    margin-left: 12px;
+}

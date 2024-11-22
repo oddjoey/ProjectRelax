@@ -1,0 +1,20 @@
+.systemSection1 {
+    margin-left: 30px;
+}
+
+.systemSection1Text {
+    font-size: 25px;
+    color: rgb(255, 255, 255);
+}
+
+.systemSection2 {
+    margin-left: 30px;
+}
+
+.systemSection2Text {
+    align-items: auto;
+    justify-content: flex-start;
+    align-self: auto;
+    -unity-text-align: upper-right;
+    color: rgb(255, 255, 255);
+}

@@ -1,0 +1,101 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Styles/ModMenuStyle.uss?fileID=7433441132597879392&amp;guid=d0ef71572d1f4de4cb6b41638d5632f9&amp;type=3#ModMenuStyle" />
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; width: 577px;" />
+        <ui:VisualElement style="flex-grow: 1; width: 1px; margin-top: 29px; background-color: rgba(0, 0, 0, 0.84); margin-bottom: 29px; margin-right: 29px; margin-left: 29px;">
+            <ui:VisualElement style="flex-grow: 1;">
+                <ui:Label tabindex="-1" text="Mods Menu" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ModMenuHeader" style="font-size: 43px; color: rgb(255, 255, 255); -unity-text-align: upper-center; -unity-font-style: bold-and-italic;" />
+                <ui:VisualElement name="VisualElement" class="systemSection1" style="flex-grow: 1; align-items: flex-start; justify-content: flex-start; align-self: auto; flex-direction: column; max-height: none;">
+                    <ui:Label tabindex="-1" text="Engine" parse-escape-sequences="true" display-tooltip-when-elided="true" name="EngineHeader" class="systemSection1Text" />
+                    <ui:VisualElement class="systemSection2" style="flex-grow: 1; justify-content: flex-start; flex-direction: column; align-items: auto; align-self: auto;">
+                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; max-height: 38px;">
+                            <ui:VisualElement style="flex-grow: 1;">
+                                <ui:Label tabindex="-1" text="HP" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HPLable" class="systemSection2Text" style="top: 2px; align-items: auto; white-space: nowrap; -unity-text-align: upper-right; text-overflow: clip; align-self: center;" />
+                            </ui:VisualElement>
+                            <ui:Slider high-value="350" name="EngineHPSlider" show-input-field="true" style="align-items: stretch; justify-content: space-between; align-self: stretch; width: 594px; height: 33px; flex-direction: row; max-width: 505px;" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; max-height: 38px;">
+                            <ui:VisualElement style="flex-grow: 1;">
+                                <ui:Label tabindex="-1" text="Max RPM" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HPLable" class="systemSection2Text" style="top: 2px; align-items: auto; white-space: nowrap; -unity-text-align: upper-right; text-overflow: clip; align-self: center;" />
+                            </ui:VisualElement>
+                            <ui:Slider high-value="10000" name="EngineMaxRPMSlider" show-input-field="true" style="align-items: stretch; justify-content: space-between; align-self: stretch; width: 594px; height: 33px; flex-direction: row; max-width: 505px;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" class="systemSection1" style="flex-grow: 1; align-items: flex-start; justify-content: flex-start; align-self: auto; flex-direction: column; max-height: none;">
+                    <ui:Label tabindex="-1" text="Brakes" parse-escape-sequences="true" display-tooltip-when-elided="true" name="EngineHeader" class="systemSection1Text" />
+                    <ui:VisualElement class="systemSection2" style="flex-grow: 1; justify-content: flex-start; flex-direction: column; align-items: auto; align-self: auto;">
+                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; max-height: 38px;">
+                            <ui:VisualElement style="flex-grow: 1;">
+                                <ui:Label tabindex="-1" text="Brake Power" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HPLable" class="systemSection2Text" style="top: 2px; align-items: auto; white-space: nowrap; -unity-text-align: upper-right; text-overflow: clip; align-self: center;" />
+                            </ui:VisualElement>
+                            <ui:Slider high-value="200" name="BrakePowerSlider" show-input-field="true" style="align-items: stretch; justify-content: space-between; align-self: stretch; width: 594px; height: 33px; flex-direction: row; max-width: 505px;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" class="systemSection1" style="flex-grow: 1; align-items: flex-start; justify-content: flex-start; align-self: auto; flex-direction: column; max-height: none;">
+                    <ui:Label tabindex="-1" text="Suspension" parse-escape-sequences="true" display-tooltip-when-elided="true" name="EngineHeader" class="systemSection1Text" />
+                    <ui:VisualElement class="systemSection2" style="flex-grow: 1; justify-content: flex-start; flex-direction: column; align-items: auto; align-self: auto;">
+                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; max-height: 38px;">
+                            <ui:VisualElement style="flex-grow: 1;">
+                                <ui:Label tabindex="-1" text="Drop" parse-escape-sequences="true" display-tooltip-when-elided="true" name="DropLabel" class="systemSection2Text" style="top: 2px; align-items: auto; white-space: nowrap; -unity-text-align: upper-right; text-overflow: clip; align-self: center;" />
+                            </ui:VisualElement>
+                            <ui:Slider high-value="0.3" name="SusDropSlider" show-input-field="true" style="align-items: stretch; justify-content: space-between; align-self: stretch; width: 594px; height: 33px; flex-direction: row; max-width: 505px;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="systemSection2" style="flex-grow: 1; justify-content: flex-start; flex-direction: column; align-items: auto; align-self: auto;">
+                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; max-height: 38px;">
+                            <ui:VisualElement style="flex-grow: 1;">
+                                <ui:Label tabindex="-1" text="Camber" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CamberLabel" class="systemSection2Text" style="top: 2px; align-items: auto; white-space: nowrap; -unity-text-align: upper-right; text-overflow: clip; align-self: center;" />
+                            </ui:VisualElement>
+                            <ui:Slider high-value="0" name="SusCamberSlider" show-input-field="true" inverted="true" low-value="-10" style="align-items: stretch; justify-content: space-between; align-self: stretch; width: 594px; height: 33px; flex-direction: row; max-width: 505px;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="systemSection2" style="flex-grow: 1; justify-content: flex-start; flex-direction: column; align-items: auto; align-self: auto;">
+                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; max-height: 38px;">
+                            <ui:VisualElement style="flex-grow: 1;">
+                                <ui:Label tabindex="-1" text="Offset" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SusOffsetSlider" class="systemSection2Text" style="top: 2px; align-items: auto; white-space: nowrap; -unity-text-align: upper-right; text-overflow: clip; align-self: center;" />
+                            </ui:VisualElement>
+                            <ui:Slider high-value="0.2" name="SusOffsetSlider" show-input-field="true" style="align-items: stretch; justify-content: space-between; align-self: stretch; width: 594px; height: 33px; flex-direction: row; max-width: 505px;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" class="systemSection1" style="flex-grow: 1; align-items: flex-start; justify-content: flex-start; align-self: auto; flex-direction: column; max-height: none; display: none;">
+                    <ui:Label tabindex="-1" text="Drivetrain" parse-escape-sequences="true" display-tooltip-when-elided="true" name="EngineHeader" class="systemSection1Text" />
+                    <ui:VisualElement class="systemSection2" style="flex-grow: 1; justify-content: flex-start; flex-direction: column; align-items: auto; align-self: auto;">
+                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; max-height: 38px;">
+                            <ui:DropdownField label="Drivetrain" choices="RWD, FWD, AWD" index="-1" name="DrivetrainDropdown" style="align-items: stretch; width: 525px; left: 39px; color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" class="systemSection1" style="flex-grow: 1; align-items: flex-start; justify-content: flex-start; align-self: auto; flex-direction: column; max-height: none;">
+                    <ui:Label tabindex="-1" text="Transmission" parse-escape-sequences="true" display-tooltip-when-elided="true" name="EngineHeader" class="systemSection1Text" />
+                    <ui:VisualElement class="systemSection2" style="flex-grow: 1; justify-content: flex-start; flex-direction: column; align-items: auto; align-self: auto;">
+                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; max-height: 38px;">
+                            <ui:VisualElement style="flex-grow: 1;">
+                                <ui:Label tabindex="-1" text="Final Drive Ratio" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HPLable" class="systemSection2Text" style="top: 2px; align-items: auto; white-space: nowrap; -unity-text-align: upper-right; text-overflow: clip; align-self: center;" />
+                            </ui:VisualElement>
+                            <ui:Slider high-value="20" name="TransFinalDriveRatioSlider" show-input-field="true" style="align-items: stretch; justify-content: space-between; align-self: stretch; width: 594px; height: 33px; flex-direction: row; max-width: 505px;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="systemSection2" style="flex-grow: 1; justify-content: flex-start; flex-direction: column; align-items: auto; align-self: auto;">
+                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; max-height: 38px; display: none;">
+                            <ui:DropdownField label="Gearbox" choices="Auto, Manual" index="-1" name="TransGearboxDropdown" style="align-items: stretch; width: 525px; left: 39px; color: rgb(255, 255, 255);" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="VisualElement" class="systemSection1" style="flex-grow: 1; align-items: flex-start; justify-content: flex-start; align-self: auto; flex-direction: column; max-height: none;">
+                    <ui:Label tabindex="-1" text="ECU" parse-escape-sequences="true" display-tooltip-when-elided="true" name="EngineHeader" class="systemSection1Text" />
+                    <ui:VisualElement class="systemSection2" style="flex-grow: 1; justify-content: flex-start; flex-direction: column; align-items: auto; align-self: auto;">
+                        <ui:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; max-height: 38px;">
+                            <ui:VisualElement style="flex-grow: 1;">
+                                <ui:Label tabindex="-1" text="Max Speed" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HPLable" class="systemSection2Text" style="top: 2px; align-items: auto; white-space: nowrap; -unity-text-align: upper-right; text-overflow: clip; align-self: center;" />
+                            </ui:VisualElement>
+                            <ui:Slider high-value="300" name="ECUMaxSpeed" show-input-field="true" style="align-items: stretch; justify-content: space-between; align-self: stretch; width: 594px; height: 33px; flex-direction: row; max-width: 505px;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

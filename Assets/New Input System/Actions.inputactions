@@ -36,7 +36,7 @@
                     "name": "Sprint",
                     "type": "Button",
                     "id": "cb99af16-6de0-4bdc-95e0-1ba57eb2f217",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -72,7 +72,7 @@
                     "name": "Settings",
                     "type": "Button",
                     "id": "36871f35-5e54-4c8c-b2b5-e0eda4b389a5",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -409,9 +409,9 @@
                 },
                 {
                     "name": "Click",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "ebdbed3f-785e-415e-8c3f-4a2e2ecc3720",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -427,18 +427,18 @@
                 },
                 {
                     "name": "MiddleClick",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "b8388d6c-f0bf-44e4-b53f-285d041e0529",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
                     "name": "RightClick",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "cd0bcbeb-76a0-4b94-b6cc-8f5f603171b0",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true

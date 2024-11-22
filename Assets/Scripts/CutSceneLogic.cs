@@ -36,8 +36,8 @@ public class CutSceneLogic : MonoBehaviour
     IEnumerator FirstCutScene()
     {
         var aj = cutSceneObjects[0].GetComponent<Animator>();
-        var door = cutSceneObjects[1];
-        var claire = cutSceneObjects[2].GetComponent<Animator>();
+        //var door = cutSceneObjects[1];
+        var claire = cutSceneObjects[1].GetComponent<Animator>();
 
         SwitchToCamera(3);
         yield return new WaitForSecondsRealtime(3);
@@ -50,13 +50,13 @@ public class CutSceneLogic : MonoBehaviour
         yield return new WaitForSecondsRealtime(1);
 
         // open door
-        Vector3 doorAngles = door.transform.localEulerAngles;
+        /*Vector3 doorAngles = door.transform.localEulerAngles;
         while (doorAngles.y > -75)
         {
             doorAngles.y = Mathf.Lerp(doorAngles.y, -90, 1 - Mathf.Pow(0.2f, Time.deltaTime));
             door.transform.localEulerAngles = doorAngles;
             yield return null;
-        }
+        }*/
 
         // mom walks in
         TriggerAnimation(claire, "MoveToFirstPosition");

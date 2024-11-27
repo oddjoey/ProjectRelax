@@ -111,7 +111,7 @@ public class SettingsLogic : MonoBehaviour
         GameData data = JsonUtility.FromJson<GameData>(File.ReadAllText(dataPath));
 
         var carObj = GameObject.Find("Car");
-        if (game.localPlayer.inGameWorld)
+        if (game.LocalPlayer.inGameWorld)
         {
             var car = carObj.GetComponent<CarLogic>();
             car.drivetrain.engineTorque = data.carData.HP * 10;

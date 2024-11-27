@@ -43,8 +43,11 @@ public class SCC_Dashboard : MonoBehaviour {
     }
 
     private void Update() {
-        if (game.localPlayer.inVehicle)
-            car = game.localPlayer.currentVehicle.GetComponent<SCC_Drivetrain>();
+        if (!game.LocalPlayer)
+            return;
+            
+        if (game.LocalPlayer.inVehicle)
+            car = game.LocalPlayer.currentVehicle.GetComponent<SCC_Drivetrain>();
         else
             car = null;
             

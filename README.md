@@ -63,19 +63,31 @@ Garage: The place where our player can customize their car.
 ## Referenced Assets
 
 Simple Keys - 3DIGITALIS - Asset As Is - https://assetstore.unity.com/packages/3d/props/tools/simple-keys-231162
+
 Modular House Pack 1 - ICAROUS - Asset As Is - https://assetstore.unity.com/packages/3d/environments/urban/modular-house-pack-1-236466
+
 Simple Garage - AIKODEX - Asset As Is - https://assetstore.unity.com/packages/3d/props/interior/simple-garage-197251
+
 Simple Car Controller - BONECRACKER GAMES - Heavily modified - https://assetstore.unity.com/packages/tools/physics/simple-car-controller-258020
+
 Demo City - VERSATILE STUDIO - Asset As Is - https://assetstore.unity.com/packages/3d/environments/urban/demo-city-by-versatile-studio-mobile-friendly-269772
+
 Simple Retro Car - POLYELER - Asset As Is - https://assetstore.unity.com/packages/3d/vehicles/simple-retro-car-291522
+
 Player Models/Animations - Mixamo - Slight Modification - https://www.mixamo.com/#/
 
 ## Guides/Tutorials
 
 Learn Unity: https://learn.unity.com/
+
 C# Guide: https://www.w3schools.com/cs/index.php
+
 Docs and guides to work with the Unity ecosystem: https://docs.unity.com/
+
 Unity 6 User Manual: https://docs.unity3d.com/6000.0/Documentation/Manual/UnityManual.html
+
 HDRP (High Definition Render Pipeline): https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@17.0/manual/index.html
+
 Fish-Net Networking: https://fish-networking.gitbook.io/docs
+
 UI Toolkit (used for making menus): https://docs.unity3d.com/Manual/UIElements.html

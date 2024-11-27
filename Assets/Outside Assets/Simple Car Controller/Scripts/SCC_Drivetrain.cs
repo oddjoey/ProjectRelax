@@ -161,7 +161,7 @@ public class SCC_Drivetrain : MonoBehaviour {
 
         for (int i = 0; i < wheels.Length; i++) {
 
-            if (wheels[i].isTraction && game.localPlayer.currentVehicle.engineOn)
+            if (wheels[i].isTraction && game.LocalPlayer.currentVehicle.engineOn)
                 wheels[i].wheelCollider.WheelCollider.motorTorque = ((engineTorque * finalDriveRatio) * (direction == 1 ? InputProcessor.inputs.throttleInput : -InputProcessor.inputs.brakeInput)) / Mathf.Clamp(totalTractionWheels, 1, 20);
             else
                 wheels[i].wheelCollider.WheelCollider.motorTorque = 0f;

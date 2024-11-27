@@ -58,20 +58,13 @@ public class TeleporterLogic : MonoBehaviour
 
         game.mainMenu.gameObject.SetActive(true);
 
-        if (game.UI.isEscapeMenuOpen)
-            game.UI.ToggleMenu();
-        if (game.UI.isInventoryMenuOpen)
-            game.UI.ToggleInventory();
-        if (game.UI.isHotbarOpen)
-            game.UI.ToggleHotbar();
-
+        game.UI.SetEscapeMenuVisibility(false);
+        game.UI.SetInventoryVisibility(false);
+        game.UI.SetHotbarVisibility(false);
         game.UI.SetMinimapVisibility(false);
         game.UI.SetCrosshairVisibility(false);
         game.UI.SetQuestVisiblity(false);
-
-        game.mainMenu.inMainMenu = true;
-        game.localPlayer.inGameWorld = false;
-        game.localPlayer.inGarage = false;
+        game.UI.SetCursorVisibility(true);
 
         game.mainMenu.SetupUIElements();
 
@@ -92,11 +85,11 @@ public class TeleporterLogic : MonoBehaviour
     }
     IEnumerator LoadGarageScene()
     {
-        if (game.localPlayer.inVehicle)
-            DontDestroyOnLoad(game.localPlayer.currentVehicle.gameObject);
+        if (game.LocalPlayer.inVehicle)
+            DontDestroyOnLoad(game.LocalPlayer.currentVehicle.gameObject);
 
-        lastLocation = game.localPlayer.inVehicle ? game.localPlayer.currentVehicle.transform.position : game.localPlayer.transform.position;
-        lastAngles = game.localPlayer.inVehicle ? game.localPlayer.currentVehicle.transform.eulerAngles : game.localPlayer.transform.eulerAngles;
+        lastLocation = game.LocalPlayer.inVehicle ? game.LocalPlayer.currentVehicle.transform.position : game.LocalPlayer.transform.position;
+        lastAngles = game.LocalPlayer.inVehicle ? game.LocalPlayer.currentVehicle.transform.eulerAngles : game.LocalPlayer.transform.eulerAngles;
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Garage");
 
@@ -107,16 +100,16 @@ public class TeleporterLogic : MonoBehaviour
         }
 
         game.mainMenu.inMainMenu = false;
-        game.localPlayer.inGameWorld = false;
-        game.localPlayer.inGarage = true;
+        game.LocalPlayer.inGameWorld = false;
+        game.LocalPlayer.inGarage = true;
         game.UI.SetMinimapVisibility(false);
 
-        if (game.localPlayer.inVehicle)
+        if (game.LocalPlayer.inVehicle)
         {
-            game.localPlayer.currentVehicle.StopMoving();
-            game.localPlayer.currentVehicle.transform.position = new Vector3(1.2f, 1, 2.1f);
-            game.localPlayer.currentVehicle.transform.eulerAngles = new Vector3(0, 0, 0);
-            game.localPlayer.GetOutVehicle();        
+            game.LocalPlayer.currentVehicle.StopMoving();
+            game.LocalPlayer.currentVehicle.transform.position = new Vector3(1.2f, 1, 2.1f);
+            game.LocalPlayer.currentVehicle.transform.eulerAngles = new Vector3(0, 0, 0);
+            game.LocalPlayer.GetOutVehicle();        
         }
         yield return null;
     }
@@ -130,17 +123,17 @@ public class TeleporterLogic : MonoBehaviour
             yield return null;
         }
 
-        game.localPlayer.inGameWorld = true;
-        game.localPlayer.inGarage = false;
+        game.LocalPlayer.inGameWorld = true;
+        game.LocalPlayer.inGarage = false;
         game.mainMenu.inMainMenu = false;
         game.UI.SetMinimapVisibility(true);
 
-        if (game.localPlayer.inVehicle)
+        if (game.LocalPlayer.inVehicle)
         {
             var garageExit = GameObject.Find("GarageExit");
-            game.localPlayer.currentVehicle.transform.position = garageExit.transform.position;
-            game.localPlayer.currentVehicle.transform.localEulerAngles = new Vector3(0, 90, 0);
-            game.localPlayer.currentVehicle.transform.SetParent(null);
+            game.LocalPlayer.currentVehicle.transform.position = garageExit.transform.position;
+            game.LocalPlayer.currentVehicle.transform.localEulerAngles = new Vector3(0, 90, 0);
+            game.LocalPlayer.currentVehicle.transform.SetParent(null);
         }
         yield return null;
     }
@@ -154,23 +147,25 @@ public class TeleporterLogic : MonoBehaviour
             yield return null;
         }
 
-        game.localPlayer.inGameWorld = true;
-        game.localPlayer.inGarage = false;
-        game.mainMenu.inMainMenu = false;
-        game.localPlayer.inVehicle = false;
-        
-        game.UI.ToggleCursor();
-        game.UI.ToggleHotbar();
         game.mainMenu.gameObject.SetActive(false);
+        game.UI.SetCursorVisibility(false);
+        game.mainMenu.inMainMenu = false;
+
+        /*game.LocalPlayer.inGameWorld = true;
+        game.LocalPlayer.inGarage = false;
+        
+        game.LocalPlayer.inVehicle = false;
+        
+        game.UI.ToggleHotbar();
         game.UI.SetMinimapVisibility(true);
         game.UI.SetCrosshairVisibility(true);
         game.UI.SetQuestVisiblity(true);
 
         var spawnPointPosition = GameObject.Find("Spawn").transform;
-        game.localPlayer.transform.position = spawnPointPosition.position + Vector3.up;
-        game.localPlayer.lookAngles.x = 180.0f;
+        game.LocalPlayer.transform.position = spawnPointPosition.position + Vector3.up;
+        game.LocalPlayer.lookAngles.x = 180.0f;
 
-        game.quests.StartFirstQuest();
+        game.quests.StartFirstQuest();*/
         yield return null;
     }
     IEnumerator LoadCitySceneQuest2()
@@ -183,21 +178,21 @@ public class TeleporterLogic : MonoBehaviour
             yield return null;
         }
 
-        game.localPlayer.inGameWorld = true;
-        game.localPlayer.inGarage = false;
+        game.LocalPlayer.inGameWorld = true;
+        game.LocalPlayer.inGarage = false;
         game.mainMenu.inMainMenu = false;
-        game.localPlayer.inVehicle = false;
+        game.LocalPlayer.inVehicle = false;
         
-        game.UI.ToggleCursor();
-        game.UI.ToggleHotbar();
+        game.UI.SetCursorVisibility(false);
+        game.UI.SetHotbarVisibility(true);
         game.mainMenu.gameObject.SetActive(false);
         game.UI.SetMinimapVisibility(true);
         game.UI.SetCrosshairVisibility(true);
         game.UI.SetQuestVisiblity(true);
 
         var spawnPointPosition = GameObject.Find("Spawn").transform;
-        game.localPlayer.transform.position = spawnPointPosition.position + Vector3.up;
-        game.localPlayer.lookAngles.x = 180.0f;
+        game.LocalPlayer.transform.position = spawnPointPosition.position + Vector3.up;
+        game.LocalPlayer.lookAngles.x = 180.0f;
 
         game.quests.StartSecondQuest();
 

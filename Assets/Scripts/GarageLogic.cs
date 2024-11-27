@@ -37,18 +37,18 @@ public class GarageLogic : MonoBehaviour
     }
     void InteractLogic()
     {
-        if (game.localPlayer == null)
+        if (game.LocalPlayer == null)
             return;
             
         RaycastHit hit;
-        if (!Physics.Raycast(game.localPlayer.camera.transform.position, game.localPlayer.camera.transform.TransformDirection(Vector3.forward), out hit, game.localPlayer.interactDistance, rayCastInteractableMask))
+        if (!Physics.Raycast(game.LocalPlayer.camera.transform.position, game.LocalPlayer.camera.transform.TransformDirection(Vector3.forward), out hit, game.LocalPlayer.interactDistance, rayCastInteractableMask))
             return;
 
         if (hit.transform.tag == "Exit")
         {
             if (game.inputs.use && !cityHeld)
             {
-                game.localPlayer.GetInVehicle(GameObject.Find("Car").GetComponent<CarLogic>());
+                game.LocalPlayer.GetInVehicle(GameObject.Find("Car").GetComponent<CarLogic>());
                 game.teleporter.LoadCityFromGarage();
                 cityHeld = true;
             }

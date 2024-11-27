@@ -53,9 +53,10 @@ public class MainMenuLogic : MonoBehaviour
 
         SetupUIElements();
 
-        game.UI.ToggleMenu();
-        game.UI.ToggleInventory();
-        game.UI.ToggleHotbar();
+        game.UI.SetEscapeMenuVisibility(false);
+        game.UI.SetNetworkMenuVisibility(false);
+        game.UI.SetInventoryVisibility(false);
+        game.UI.SetHotbarVisibility(false);
         game.UI.SetMinimapVisibility(false);
         game.UI.SetCrosshairVisibility(false);
         game.UI.SetQuestVisiblity(false);
@@ -74,7 +75,8 @@ public class MainMenuLogic : MonoBehaviour
     }
     void OnLoadButton(ClickEvent clickEvent)
     {
-        if (!game.settings.DataExists())
+        game.teleporter.LoadCityQuest1();
+        /*if (!game.settings.DataExists())
             return;
 
         game.settings.LoadPlayerData();
@@ -90,7 +92,7 @@ public class MainMenuLogic : MonoBehaviour
             case 2:
                 game.teleporter.LoadCityQuest2();
             break;
-        }
+        }*/
     }
     void OnBackButton(ClickEvent clickEvent)
     {

@@ -84,7 +84,7 @@ public class CarLogic : MonoBehaviour
     }
     public bool IsPlayerInCar()
     {
-        return game.localPlayer.inVehicle && game.localPlayer.currentVehicle.gameObject == gameObject;
+        return game.LocalPlayer.inVehicle && game.LocalPlayer.currentVehicle.gameObject == gameObject;
     }
     void ApplyCarLogic()
     {

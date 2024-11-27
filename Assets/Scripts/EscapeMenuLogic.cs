@@ -9,9 +9,11 @@ public class EscapeMenuLogic : MonoBehaviour
     private UIDocument uIDocument;
     [SerializeField] private VisualTreeAsset escapeMenuAsset;
     [SerializeField] private VisualTreeAsset settingsMenuAsset;
-    
+    private NetworkMenuLogic networkMenu;
+
     private Button resumeButton;
     private Button saveButton;
+    private Button networkButton;
     private Button settingsButton;
     private Button quitButton;
     private Slider volumeSlider;
@@ -20,12 +22,17 @@ public class EscapeMenuLogic : MonoBehaviour
     private void OnResume(ClickEvent clickEvent)
     {
         uIDocument.rootVisualElement.style.display = DisplayStyle.None;
-        game.UI.ToggleMenu();
-        game.UI.ToggleCursor();
+        game.UI.SetEscapeMenuVisibility(false);
+        game.UI.SetCursorVisibility(false);
     }
     private void OnSave(ClickEvent clickEvent)
     {
         game.settings.SavePlayerData();
+    }
+    private void OnNetwork(ClickEvent clickEvent)
+    {
+        game.UI.SetEscapeMenuVisibility(false);
+        game.UI.SetNetworkMenuVisibility(true);
     }
     private void OnSettings(ClickEvent clickEvent)
     {
@@ -42,8 +49,8 @@ public class EscapeMenuLogic : MonoBehaviour
     }
     private void OnQuit(ClickEvent clickEvent)
     {
-        if (game.localPlayer.inVehicle)
-            game.localPlayer.GetOutVehicle();
+        if (game.LocalPlayer.inVehicle)
+            game.LocalPlayer.GetOutVehicle();
             
         game.teleporter.LoadMainMenu();
     }
@@ -57,11 +64,13 @@ public class EscapeMenuLogic : MonoBehaviour
     {
         resumeButton = uIDocument.rootVisualElement.Q<Button>("Resume");
         saveButton = uIDocument.rootVisualElement.Q<Button>("Save");
+        networkButton = uIDocument.rootVisualElement.Q<Button>("Network");
         settingsButton = uIDocument.rootVisualElement.Q<Button>("Settings");
         quitButton = uIDocument.rootVisualElement.Q<Button>("Quit");
 
         resumeButton.RegisterCallback<ClickEvent>(OnResume);
         saveButton.RegisterCallback<ClickEvent>(OnSave);
+        networkButton.RegisterCallback<ClickEvent>(OnNetwork);
         settingsButton.RegisterCallback<ClickEvent>(OnSettings);
         quitButton.RegisterCallback<ClickEvent>(OnQuit);
     }

@@ -32,17 +32,17 @@ public class QuestLogic : MonoBehaviour
         questInfo.text = "Get Into Car";
         game.miniMap.waypointObject = car.transform.Find("MinimapMarker").gameObject;
 
-        while (!game.localPlayer.inVehicle)
+        while (!game.LocalPlayer.inVehicle)
             yield return null;
 
         questInfo.text = "Turn on your ride! (E)";
-        while (!game.localPlayer.currentVehicle.engineOn)
+        while (!game.LocalPlayer.currentVehicle.engineOn)
             yield return null;
 
         questInfo.text = "Go to friend's garage to fix up your ride!";
         game.miniMap.waypointObject = GameObject.Find("GarageEntrance").transform.Find("MinimapIcon").gameObject;
         
-        while (!game.localPlayer.inGarage)
+        while (!game.LocalPlayer.inGarage)
             yield return null;
 
         game.miniMap.waypointObject = null;
@@ -53,7 +53,7 @@ public class QuestLogic : MonoBehaviour
 
         questInfo.text = "Lets go back out! (F on Garage Door)";
 
-        while(game.localPlayer.inGarage)
+        while(game.LocalPlayer.inGarage)
             yield return null;
 
         

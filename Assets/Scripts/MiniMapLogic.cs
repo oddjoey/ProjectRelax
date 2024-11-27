@@ -25,7 +25,7 @@ public class MiniMapLogic : MonoBehaviour
         if (waypointObject == null)
             return;
 
-        var localPlayerMarkerPos = minimapCamera.WorldToScreenPoint(game.localPlayer.inVehicle ? game.localPlayer.currentVehicle.transform.position : game.localPlayer.transform.position);
+        var localPlayerMarkerPos = minimapCamera.WorldToScreenPoint(game.LocalPlayer.inVehicle ? game.LocalPlayer.currentVehicle.transform.position : game.LocalPlayer.transform.position);
         localPlayerMarkerPos.z = 0;
         var markerPos = minimapCamera.WorldToScreenPoint(waypointObject.transform.position);
         markerPos.z = 0;
@@ -43,11 +43,11 @@ public class MiniMapLogic : MonoBehaviour
     }
     void MoveCamera()
     {
-        Vector3 newCamPosition = !game.localPlayer.inVehicle ? game.localPlayer.transform.position : game.localPlayer.currentVehicle.transform.position;
+        Vector3 newCamPosition = !game.LocalPlayer.inVehicle ? game.LocalPlayer.transform.position : game.LocalPlayer.currentVehicle.transform.position;
         Vector3 newCamAngle = minimapCamera.transform.localEulerAngles;
         newCamPosition.y += 100;
         newCamAngle.x = 90;
-        newCamAngle.y = game.localPlayer.inVehicle ? game.localPlayer.currentVehicle.transform.localEulerAngles.y : game.localPlayer.transform.localEulerAngles.y;
+        newCamAngle.y = game.LocalPlayer.inVehicle ? game.LocalPlayer.currentVehicle.transform.localEulerAngles.y : game.LocalPlayer.transform.localEulerAngles.y;
         minimapCamera.transform.position = newCamPosition;
         minimapCamera.transform.localEulerAngles = newCamAngle;
     }

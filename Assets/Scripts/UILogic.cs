@@ -15,6 +15,7 @@ public class UILogic : MonoBehaviour
     public bool isInventoryMenuOpen = true;
     public bool isEscapeMenuOpen = true;
     public bool isHotbarOpen = true;
+    public bool isNetworkMenuOpen = true;
 
     // Internal Variables
     public bool inventoryToggle = false;
@@ -22,11 +23,12 @@ public class UILogic : MonoBehaviour
 
     // Components/GameObjects
     private UIDocument escapeMenu;
+    private UIDocument networkMenu;
     private GameObject inventoryObject;
     private GameObject hotbarObject;
     private GameObject hotbarSelectedObject;
     private GameObject crosshairObject;
-    private GameObject tachometerObject;
+    private GameObject tachoSpeedoObject;
     private GameObject RPMObject;
     private GameObject KMHObject;
     private GameObject minimapObject;
@@ -36,35 +38,42 @@ public class UILogic : MonoBehaviour
     {
         minimapObject.SetActive(visible);
     }
-    public void SetCrosshairVisibility(bool visbile)
+    public void SetCrosshairVisibility(bool visible)
     {
-        crosshairObject.SetActive(visbile);
+        crosshairObject.SetActive(visible);
     }
     public void SetQuestVisiblity(bool visible)
     {
         questNameObject.GetComponent<TMP_Text>().alpha = visible ? 1 : 0;
         questInfoObject.GetComponent<TMP_Text>().alpha = visible ? 1 : 0;
     }
+    public void SetTachoSpeedoVisiblity(bool visible)
+    {
+        tachoSpeedoObject.SetActive(visible);
+    }
     void RPMTachoLogic()
     {
-        tachometerObject.SetActive(game.localPlayer.inVehicle && !game.localPlayer.inGarage);
+        if (!game.LocalPlayer)
+            return;
 
-        if (game.localPlayer.inVehicle)
+        SetTachoSpeedoVisiblity(game.LocalPlayer.inVehicle && !game.LocalPlayer.inGarage);
+
+        if (game.LocalPlayer.inVehicle)
         {
-            RPMObject.GetComponent<UnityEngine.UI.Image>().color = game.localPlayer.currentVehicle.engineOn ? Color.red : Color.white;
-            KMHObject.GetComponent<UnityEngine.UI.Image>().color = game.localPlayer.currentVehicle.engineOn ? Color.red : Color.white;
+            RPMObject.GetComponent<UnityEngine.UI.Image>().color = game.LocalPlayer.currentVehicle.engineOn ? Color.red : Color.white;
+            KMHObject.GetComponent<UnityEngine.UI.Image>().color = game.LocalPlayer.currentVehicle.engineOn ? Color.red : Color.white;
         }
     }
-    public void ToggleCursor()
+    public void SetCursorVisibility(bool visible)
     {
-        isCursorLocked = !isCursorLocked;
+        isCursorLocked = !visible;
 
         UnityEngine.Cursor.lockState = isCursorLocked ? CursorLockMode.Locked : CursorLockMode.None;
         UnityEngine.Cursor.visible = !isCursorLocked;
     }
-    public void ToggleInventory()
+    public void SetInventoryVisibility(bool visible)
     {
-        isInventoryMenuOpen = !isInventoryMenuOpen;
+        isInventoryMenuOpen = visible;
 
         foreach (var item in game.inventory.inventoryGrid.cells)
             if (item != null)
@@ -72,17 +81,25 @@ public class UILogic : MonoBehaviour
 
         inventoryObject.SetActive(isInventoryMenuOpen);
     }
-    public void ToggleMenu()
+    public void SetNetworkMenuVisibility(bool visible)
     {
-        isEscapeMenuOpen = !isEscapeMenuOpen;
+        isNetworkMenuOpen = visible;
+
+        networkMenu.rootVisualElement.style.display = isNetworkMenuOpen ? DisplayStyle.Flex : DisplayStyle.None;
+            
+        Time.timeScale = isNetworkMenuOpen ? 0 : 1;
+    }
+    public void SetEscapeMenuVisibility(bool visible)
+    {
+        isEscapeMenuOpen = visible;
 
         escapeMenu.rootVisualElement.style.display = isEscapeMenuOpen ? DisplayStyle.Flex : DisplayStyle.None;
             
         Time.timeScale = isEscapeMenuOpen ? 0 : 1;
     }
-    public void ToggleHotbar()
+    public void SetHotbarVisibility(bool visible)
     {
-        isHotbarOpen = !isHotbarOpen;
+        isHotbarOpen = visible;
 
         foreach (var item in game.inventory.hotbarGrid.cells)
            if (item != null)
@@ -103,7 +120,7 @@ public class UILogic : MonoBehaviour
         crosshairObject = GameObject.Find("Crosshair");
         hotbarObject = GameObject.Find("Hotbar");
 
-        tachometerObject = GameObject.Find("SCC_Canvas");
+        tachoSpeedoObject = GameObject.Find("SCC_Canvas");
 
         RPMObject = GameObject.Find("RPM");
         KMHObject = GameObject.Find("KMH");
@@ -114,31 +131,36 @@ public class UILogic : MonoBehaviour
         questInfoObject = game.quests.transform.Find("QuestInfo").gameObject;
 
         hotbarSelectedObject = GameObject.Find("Selected Hotbar Item");
+
+        networkMenu = GameObject.Find("Network Menu").GetComponent<UIDocument>();
+
+        SetTachoSpeedoVisiblity(false);
     }
     void Update()
     {
         RPMTachoLogic();
 
+        // Toggle Inventory
         if (game.inputs.inventory && !inventoryToggle && !isEscapeMenuOpen)
         {
             inventoryToggle = true;
-            ToggleCursor();
-            ToggleInventory();
-            SetCrosshairVisibility(isCursorLocked && !game.localPlayer.inVehicle);
+            SetCursorVisibility(!isInventoryMenuOpen);
+            SetInventoryVisibility(!isInventoryMenuOpen);
+            SetCrosshairVisibility(isCursorLocked && !game.LocalPlayer.inVehicle);
         }
 
+        // Toggle Escape Menu
         if (game.inputs.settings && !menuToggle && !isInventoryMenuOpen)
         {
             menuToggle = true;
-            ToggleCursor();
-            ToggleMenu();
-            SetCrosshairVisibility(isCursorLocked && !game.localPlayer.inVehicle);
+            SetCursorVisibility(!isEscapeMenuOpen);
+            SetEscapeMenuVisibility(!isEscapeMenuOpen);
+            //SetCrosshairVisibility(isCursorLocked && !game.LocalPlayer.inVehicle);
         }
         
         if (!game.inputs.inventory)
             inventoryToggle = false;
         if (!game.inputs.settings)
             menuToggle = false;
-
     }
 }

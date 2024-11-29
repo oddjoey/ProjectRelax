@@ -92,6 +92,7 @@ namespace FishNet.Component.Spawning
         {
             if (!asServer)
                 return;
+                
             if (_playerPrefab == null)
             {
                 NetworkManagerExtensions.LogWarning($"Player prefab is empty and cannot be spawned for connection {conn.ClientId}.");

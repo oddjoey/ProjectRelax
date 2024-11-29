@@ -1,5 +1,4 @@
 using FishNet.Transporting;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,25 +10,62 @@ public class NetworkMenuLogic : MonoBehaviour
     private Button serverButton;
     private Button clientButton;
     private Button returnButton;
-    private LocalConnectionState _clientState = LocalConnectionState.Stopped;
-    private LocalConnectionState _serverState = LocalConnectionState.Stopped;
+    private LocalConnectionState clientState = LocalConnectionState.Stopped;
+    private LocalConnectionState serverState = LocalConnectionState.Stopped;
     private void ClientManager_OnClientConnectionState(ClientConnectionStateArgs obj)
     {
-        _clientState = obj.ConnectionState;
+        clientState = obj.ConnectionState;
+        switch (clientState)
+        {
+            case LocalConnectionState.Stopping:
+                clientButton.text = "Start Client";
+            break;
+            case LocalConnectionState.Started:
+                clientButton.text = "Stop Client";
+            break;
+        }
+        Debug.Log("Client connection: " + obj.ConnectionState);
     }
     private void ServerManager_OnServerConnectionState(ServerConnectionStateArgs obj)
     {
-        _serverState = obj.ConnectionState;
+        serverState = obj.ConnectionState;
+        switch (serverState)
+        {
+            case LocalConnectionState.Stopping:
+                serverButton.text = "Start Server";
+            break;
+            case LocalConnectionState.Started:
+                serverButton.text = "Stop Server";
+                game.network.OnStartServer();
+            break;
+        }
+        Debug.Log("Server connection: " + obj.ConnectionState);
     }
 
-    void OnServer(ClickEvent clickEvent)
-    {
-        Debug.Log("server");
-        game.network.networkManager.ServerManager.StartConnection();
-    }
     void OnClient(ClickEvent clickEvent)
     {
-        game.network.networkManager.ClientManager.StartConnection();
+        switch (clientState)
+        {
+            case LocalConnectionState.Stopped:
+                game.network.networkManager.ClientManager.StartConnection();
+            break;
+            case LocalConnectionState.Started:
+                game.network.networkManager.ClientManager.StopConnection();
+            break;
+        }
+    }
+    void OnServer(ClickEvent clickEvent)
+    {
+        switch (serverState)
+        {
+            case LocalConnectionState.Stopped:
+                game.network.networkManager.ServerManager.StartConnection();
+            break;
+            case LocalConnectionState.Started:
+                game.network.networkManager.ServerManager.StopConnection(true);
+            break;
+        }
+        
     }
     void OnReturn(ClickEvent clickEvent)
     {

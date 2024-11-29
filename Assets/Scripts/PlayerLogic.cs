@@ -5,6 +5,9 @@ public class PlayerLogic : NetworkBehaviour
 {
     GameLogic game;
 
+    // Systems
+    public InventoryLogic inventory;
+
     // Components
     private Rigidbody rigidBody;
     private MeshRenderer meshRenderer;
@@ -76,61 +79,60 @@ public class PlayerLogic : NetworkBehaviour
         }
         else if (jumpHeld && !game.inputs.jump)
             jumpHeld = false;
-
     }
     void HoldingObjectLogic()
     {
-        game.inventory.currentHotbarItem = game.inventory.hotbarGrid.cells[game.hotbar.currentHotbarIndex, 0];
+       inventory.currentHotbarItem = inventory.hotbarGrid.cells[inventory.currentHotbarIndex, 0];
 
         // Hotbar item change
-        if (game.inventory.lastHotbarItemIndex != game.hotbar.currentHotbarIndex)
+        if (inventory.lastHotbarItemIndex != inventory.currentHotbarIndex)
         {
             //if (game.inventory.currentHotbarItem != null)
                 //game.sounds.ObjectSwitchSound(game.inventory.currentHotbarItem.type);
 
-            game.inventory.lastHotbarItemIndex = game.hotbar.currentHotbarIndex;
+            inventory.lastHotbarItemIndex = inventory.currentHotbarIndex;
         }
 
         // No item being held, destory held item if there is one
-        if (game.inventory.currentHotbarItem == null)
+        if (inventory.currentHotbarItem == null)
         {
-            if (game.inventory.holdingItem != null)
+            if (inventory.holdingItem != null)
             {
-                Destroy(game.inventory.holdingItem);
-                game.inventory.holdingItem = null;
+                Destroy(inventory.holdingItem);
+                inventory.holdingItem = null;
             }            
             return;
         }
 
         // Holding item
-        if (game.inventory.holdingItem != null)
+        if (inventory.holdingItem != null)
         {
-            if (game.inventory.lastHotbarItemType != game.inventory.currentHotbarItem.type)
+            if (inventory.lastHotbarItemType != inventory.currentHotbarItem.type)
             {
-                Destroy(game.inventory.holdingItem);
+                Destroy(inventory.holdingItem);
 
-                game.inventory.holdingItem = Instantiate(game.inventory.currentHotbarItem.heldObject);
+                inventory.holdingItem = Instantiate(inventory.currentHotbarItem.heldObject);
 
-                game.inventory.holdingItem.transform.parent = camera.transform;
-                game.inventory.holdingItem.transform.localPosition = game.inventory.currentHotbarItem.localPosition;
-                game.inventory.holdingItem.transform.localRotation = Quaternion.Euler(game.inventory.currentHotbarItem.localRotation);
+                inventory.holdingItem.transform.parent = camera.transform;
+                inventory.holdingItem.transform.localPosition = inventory.currentHotbarItem.localPosition;
+                inventory.holdingItem.transform.localRotation = Quaternion.Euler(inventory.currentHotbarItem.localRotation);
 
-                game.inventory.lastHotbarItemType = game.inventory.currentHotbarItem.type;
-                game.inventory.hotbarItemLogic = game.inventory.holdingItem.GetComponent<HeldItemLogic>();
+                inventory.lastHotbarItemType = inventory.currentHotbarItem.type;
+                inventory.hotbarItemLogic = inventory.holdingItem.GetComponent<HeldItemLogic>();
             }
         }
         else
         {
-            game.inventory.holdingItem = Instantiate(game.inventory.currentHotbarItem.heldObject);
+            inventory.holdingItem = Instantiate(inventory.currentHotbarItem.heldObject);
 
-            game.inventory.holdingItem.transform.parent = camera.transform;
-            game.inventory.holdingItem.transform.localPosition = game.inventory.currentHotbarItem.localPosition;
-            game.inventory.holdingItem.transform.localRotation = Quaternion.Euler(game.inventory.currentHotbarItem.localRotation);
+            inventory.holdingItem.transform.parent = camera.transform;
+            inventory.holdingItem.transform.localPosition = inventory.currentHotbarItem.localPosition;
+            inventory.holdingItem.transform.localRotation = Quaternion.Euler(inventory.currentHotbarItem.localRotation);
 
-            game.inventory.lastHotbarItemType = game.inventory.currentHotbarItem.type;
-            game.inventory.hotbarItemLogic = game.inventory.holdingItem.GetComponent<HeldItemLogic>();
+            inventory.lastHotbarItemType = inventory.currentHotbarItem.type;
+            inventory.hotbarItemLogic =inventory.holdingItem.GetComponent<HeldItemLogic>();
         }
-            if (game.inventory.currentHotbarItem == null)
+            if (inventory.currentHotbarItem == null)
                 return;
 
     }
@@ -194,23 +196,36 @@ public class PlayerLogic : NetworkBehaviour
 
         return false;
     }
-    void Start()
-    {        
+    public override void OnStartClient()
+    {      
+        if (!base.IsOwner)
+            return;
+
         game = GameLogic.instance;
 
         rigidBody = GetComponent<Rigidbody>();
         meshRenderer = GetComponent<MeshRenderer>();
-        camera = GameObject.Find("PlayerCamera");
+        camera = transform.Find("PlayerCamera").gameObject;
 
         rayCastInteractableMask = 1 << LayerMask.NameToLayer("Interactable");
+
+        inventory = GetComponent<InventoryLogic>();
+
+        camera.SetActive(true);
     }
     void FixedUpdate()
     {
+        if (!base.IsOwner || !base.IsClientInitialized)
+            return;
+            
         if (game.UI.isCursorLocked && !inVehicle)
             MovementLogic();
     }
     void Update()
     {
+        if (!IsOwner || !base.IsClientInitialized)
+            return;
+
         HoldingObjectLogic();
 
         if (game.UI.isCursorLocked && !inVehicle)

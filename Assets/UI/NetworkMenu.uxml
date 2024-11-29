@@ -5,8 +5,8 @@
             <ui:Label tabindex="-1" text="Network" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Network" style="align-self: center; color: rgb(255, 255, 255); font-size: 42px; top: 11px; -unity-font-style: bold-and-italic;" />
             <ui:VisualElement style="flex-grow: 1; align-self: center; top: 97px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: -1px; padding-right: -1px; padding-bottom: -1px; padding-left: -1px;">
                 <ui:Toggle label="Show Network Info" name="DebugInfo" />
-                <ui:Button text="Server" name="ServerButton" />
-                <ui:Button text="Client" name="ClientButton" />
+                <ui:Button text="Start Server" name="ServerButton" />
+                <ui:Button text="Start Client" name="ClientButton" />
                 <ui:Button text="Return" name="ReturnButton" />
             </ui:VisualElement>
         </ui:VisualElement>

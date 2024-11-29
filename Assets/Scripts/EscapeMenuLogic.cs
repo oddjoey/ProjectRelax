@@ -49,8 +49,8 @@ public class EscapeMenuLogic : MonoBehaviour
     }
     private void OnQuit(ClickEvent clickEvent)
     {
-        if (game.LocalPlayer.inVehicle)
-            game.LocalPlayer.GetOutVehicle();
+        /* if (game.LocalPlayer.inVehicle)
+            game.LocalPlayer.GetOutVehicle(); */
             
         game.teleporter.LoadMainMenu();
     }

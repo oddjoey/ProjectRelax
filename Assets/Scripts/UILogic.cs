@@ -73,11 +73,11 @@ public class UILogic : MonoBehaviour
     }
     public void SetInventoryVisibility(bool visible)
     {
-        isInventoryMenuOpen = visible;
+         isInventoryMenuOpen = visible;
 
-        foreach (var item in game.inventory.inventoryGrid.cells)
+        /*foreach (var item in game.inventory.inventoryGrid.cells)
             if (item != null)
-                item.uiObject.SetActive(isInventoryMenuOpen);
+                item.uiObject.SetActive(isInventoryMenuOpen);*/
 
         inventoryObject.SetActive(isInventoryMenuOpen);
     }
@@ -101,9 +101,9 @@ public class UILogic : MonoBehaviour
     {
         isHotbarOpen = visible;
 
-        foreach (var item in game.inventory.hotbarGrid.cells)
+/*         foreach (var item in game.inventory.hotbarGrid.cells)
            if (item != null)
-               item.uiObject.SetActive(isHotbarOpen);
+               item.uiObject.SetActive(isHotbarOpen); */
         
         hotbarObject.SetActive(isHotbarOpen);
 
@@ -115,7 +115,6 @@ public class UILogic : MonoBehaviour
     {
         game = GameLogic.instance;
         escapeMenu = GameObject.Find("Escape Menu").GetComponent<UIDocument>();
-
         inventoryObject = GameObject.Find("Inventory");
         crosshairObject = GameObject.Find("Crosshair");
         hotbarObject = GameObject.Find("Hotbar");
@@ -127,8 +126,8 @@ public class UILogic : MonoBehaviour
 
         minimapObject = GameObject.Find("Minimap");
 
-        questNameObject = game.quests.transform.Find("QuestName").gameObject;
-        questInfoObject = game.quests.transform.Find("QuestInfo").gameObject;
+        questNameObject = GameObject.Find("QuestName").gameObject;
+        questInfoObject = GameObject.Find("QuestInfo").gameObject;
 
         hotbarSelectedObject = GameObject.Find("Selected Hotbar Item");
 
@@ -146,7 +145,7 @@ public class UILogic : MonoBehaviour
             inventoryToggle = true;
             SetCursorVisibility(!isInventoryMenuOpen);
             SetInventoryVisibility(!isInventoryMenuOpen);
-            SetCrosshairVisibility(isCursorLocked && !game.LocalPlayer.inVehicle);
+            //SetCrosshairVisibility(isCursorLocked && !game.LocalPlayer.inVehicle);
         }
 
         // Toggle Escape Menu

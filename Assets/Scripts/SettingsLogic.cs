@@ -67,7 +67,7 @@ public class SettingsLogic : MonoBehaviour
         data.quest = game.quests.questNumber;
 
         // Save inventory items
-        var inventoryItems = game.inventory.GetItemsInCells(game.inventory.inventoryGrid, 0, 0, game.inventory.inventoryGrid.size.x, game.inventory.inventoryGrid.size.y);
+        /* var inventoryItems = game.inventory.GetItemsInCells(game.inventory.inventoryGrid, 0, 0, game.inventory.inventoryGrid.size.x, game.inventory.inventoryGrid.size.y);
         foreach (var item in inventoryItems)
         {
             if (item == null)
@@ -98,7 +98,7 @@ public class SettingsLogic : MonoBehaviour
             itemData.y = item.uiCellOrigin.y;
             itemData.type = (int)item.type;
             data.hotbar.Add(itemData);
-        }
+        } */
 
         string jsonData = JsonUtility.ToJson(data);
         File.WriteAllText(dataPath, jsonData);
@@ -128,7 +128,7 @@ public class SettingsLogic : MonoBehaviour
         volume = data.volume;
         game.quests.questNumber = data.quest;
 
-        game.inventory.ClearPanel(ref game.inventory.inventoryGrid);
+/*         game.inventory.ClearPanel(ref game.inventory.inventoryGrid);
         game.inventory.ClearPanel(ref game.inventory.hotbarGrid);
         foreach (var itemData in data.inventory)
         {
@@ -139,7 +139,7 @@ public class SettingsLogic : MonoBehaviour
         {
             InventoryItem item = new InventoryItem((InventoryItem.itemIDs)itemData.type);
             game.inventory.AddItem(ref game.inventory.hotbarGrid, ref item, itemData.x, itemData.y);
-        }
+        } */
     }
     public bool DataExists()
     {

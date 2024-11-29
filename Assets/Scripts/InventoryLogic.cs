@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet;
+using FishNet.Object;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class InventoryLogic : MonoBehaviour
+public class InventoryLogic : NetworkBehaviour
 {
     GameLogic game;
     [SerializeField] public int cellPixelSize = 32;
@@ -20,13 +22,30 @@ public class InventoryLogic : MonoBehaviour
     private bool isCursorInHotbar;
 
     private Vector2Int cellCursor;
-
+    private RectTransform hotbarHighlightGrid;
     public InventoryItem currentHotbarItem;
+    public int currentHotbarIndex = 0;
     private Vector2Int heldItemCellPos;
     public InventoryItem.itemIDs lastHotbarItemType;
     public int lastHotbarItemIndex = -1;
     public GameObject holdingItem;
     public HeldItemLogic hotbarItemLogic;
+    void ScrollingHotbarLogic()
+    {
+        Vector3 selectedPosition = hotbarGrid.GetPosition();
+        selectedPosition.x += currentHotbarIndex * cellPixelSize;
+
+        hotbarHighlightGrid.position = selectedPosition;
+
+        if (!game.UI.isCursorLocked)
+            return;
+
+        if (game.inputs.scroll.y < 0 && currentHotbarIndex < hotbarGrid.size.x - 1)
+            currentHotbarIndex++;
+
+        if (game.inputs.scroll.y > 0 && currentHotbarIndex > 0)
+            currentHotbarIndex--;
+    }
     public void ClearPanel(ref InventoryPanel panel)
     {
         var items = GetItemsInCells(panel, 0, 0, panel.size.x, panel.size.y);
@@ -267,17 +286,27 @@ public class InventoryLogic : MonoBehaviour
     {
         inventoryGrid = new InventoryPanel("Inventory", inventorySize, cellPixelSize);
         hotbarGrid = new InventoryPanel("Hotbar", hotbarSize, cellPixelSize);
+        hotbarHighlightGrid = GameObject.Find("Selected Hotbar Item").GetComponent<RectTransform>();
     }
-    void Start()
+    public override void OnStartClient()
     {
+        if (!base.IsOwner)
+            return;
+
         game = GameLogic.instance;
         items = GameObject.Find("Items");
         
         SetupInventory();
+
+        game.UI.SetInventoryVisibility(false);
     }
     void Update()
     {
+        if (!base.IsOwner || !base.IsClientInitialized)
+            return;
+
         Calculate();
         MoveItemLogic();
+        ScrollingHotbarLogic();
     }
 }

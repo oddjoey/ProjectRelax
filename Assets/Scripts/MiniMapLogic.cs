@@ -53,7 +53,7 @@ public class MiniMapLogic : MonoBehaviour
     }
     void Update()
     {
-        MoveCamera();
-        UpdateMarkers();
+        //MoveCamera();
+        //UpdateMarkers();
     }
 }

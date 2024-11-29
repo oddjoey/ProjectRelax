@@ -52,14 +52,6 @@ public class MainMenuLogic : MonoBehaviour
         uIDocument = GetComponent<UIDocument>();
 
         SetupUIElements();
-
-        game.UI.SetEscapeMenuVisibility(false);
-        game.UI.SetNetworkMenuVisibility(false);
-        game.UI.SetInventoryVisibility(false);
-        game.UI.SetHotbarVisibility(false);
-        game.UI.SetMinimapVisibility(false);
-        game.UI.SetCrosshairVisibility(false);
-        game.UI.SetQuestVisiblity(false);
     }
     void Update()
     {

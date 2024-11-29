@@ -1,18 +1,17 @@
 using System;
 using FishNet.Managing;
+using FishNet.Object;
 using UnityEngine;
 
 public class GameLogic : MonoBehaviour
 {    
     public static GameLogic instance;
     // Prefabs
-    [SerializeField] private GameObject localPlayerPrefab;
+    [SerializeField] public NetworkObject playerPrefab;
     public GameObject carPrefab;
     // Systems
     public InputManager inputs;
     public NetworkLogic network;
-    public InventoryLogic inventory;
-    public HotbarLogic hotbar;
     public SettingsLogic settings;
     public SoundLogic sounds;
     public UILogic UI;
@@ -33,16 +32,15 @@ public class GameLogic : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        inputs = GameObject.Find("Inputs").GetComponent<InputManager>();
-        network = GameObject.Find("NetworkManager").GetComponent<NetworkLogic>();
-        inventory = GameObject.Find("Inventory").GetComponent<InventoryLogic>();
-        hotbar = GameObject.Find("Hotbar").GetComponent<HotbarLogic>();
-        settings = GameObject.Find("Settings").GetComponent<SettingsLogic>();
+        network = GetComponent<NetworkLogic>();
         sounds = GameObject.Find("Sounds").GetComponent<SoundLogic>();
         UI = GameObject.Find("UI").GetComponent<UILogic>();
-        teleporter = GameObject.Find("Teleporter").GetComponent<TeleporterLogic>();
         mainMenu = GameObject.Find("Main Menu").GetComponent<MainMenuLogic>();
         miniMap = GameObject.Find("Minimap").GetComponent<MiniMapLogic>();
-        quests = GameObject.Find("Quests").GetComponent<QuestLogic>();
+
+        inputs = GetComponent<InputManager>();
+        settings = GetComponent<SettingsLogic>();
+        teleporter = GetComponent<TeleporterLogic>();
+        quests = GetComponent<QuestLogic>();
     }
 }

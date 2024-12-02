@@ -92,4 +92,8 @@ HDRP (High Definition Render Pipeline): https://docs.unity3d.com/Packages/com.un
 
 Fish-Net Networking: https://fish-networking.gitbook.io/docs
 
+Steamworks.NET Overview: https://steamworks.github.io/ 
+
+Steamworks API: https://partner.steamgames.com/doc/sdk/api
+
 UI Toolkit (used for making menus): https://docs.unity3d.com/Manual/UIElements.html

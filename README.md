@@ -78,6 +78,8 @@ Player Models/Animations - Mixamo - Slight Modification - https://www.mixamo.com
 
 ## Guides/Tutorials
 
+Game Dev Handbook: https://kb.heathen.group/
+
 Learn Unity: https://learn.unity.com/
 
 C# Guide: https://www.w3schools.com/cs/index.php

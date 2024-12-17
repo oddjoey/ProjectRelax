@@ -25,7 +25,7 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/Scenes/IntroCutScene.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/City.unity
+    m_path: Assets/Scenes/city.unity
   - m_enabled: 1
     m_path: Assets/Scenes/Garage.unity
   m_ScriptingDefines: []

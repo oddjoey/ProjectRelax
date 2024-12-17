@@ -1,10 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Styles/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=a5cfc9125db1ac442a1f243b6195e265&amp;type=3#MainMenuStyle" />
     <ui:VisualElement style="flex-grow: 1;">
-        <ui:VisualElement name="VisualElement" style="flex-grow: 1; margin-top: 42px; margin-right: 42px; margin-bottom: 42px; margin-left: 42px; width: 754px; background-color: rgba(0, 0, 0, 0.82); padding-top: 13px; padding-right: 13px; padding-bottom: 13px; padding-left: 13px;">
+        <ui:VisualElement name="VisualElement" style="flex-grow: 1; margin-top: 42px; margin-right: 42px; margin-bottom: 42px; margin-left: 42px; background-color: rgba(0, 0, 0, 0.82); padding-top: 13px; padding-right: 13px; padding-bottom: 13px; padding-left: 13px; max-width: 608px; max-height: 531px;">
             <ui:Slider label="Volume" high-value="100" show-input-field="true" name="VolumeSlider" class="slider" />
             <ui:Slider label="Sensitivity" high-value="100" show-input-field="true" name="SensitivitySlider" class="slider" />
-            <ui:Button text="Return" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ReturnButton" class="button" style="top: 719px; width: 239px; left: -201px; margin-top: 6px;" />
+            <ui:Button text="Back" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BackButton" selectable="true" class="button" style="width: 239px; margin-top: 6px; align-self: flex-start; top: 310px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

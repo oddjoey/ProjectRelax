@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Connection;
+using FishNet.Managing.Scened;
+using FishNet.Object;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +12,8 @@ public class TeleporterLogic : MonoBehaviour
     // Internal Variables
     private Vector3 lastLocation;
     private Vector3 lastAngles;
+    public bool sceneChanging;
+
     void Start()
     {
         game = GameLogic.instance;
@@ -26,7 +31,7 @@ public class TeleporterLogic : MonoBehaviour
     {
         StartCoroutine(LoadGarageScene());
     }
-    public void LoadCityQuest1()
+    public void LoadCityFromIntro()
     {
         StartCoroutine(LoadCitySceneFromIntro());
     }
@@ -48,7 +53,7 @@ public class TeleporterLogic : MonoBehaviour
         var car = GameObject.Find("Car");
         if (car != null)
             Destroy(car);
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu");
+        AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainMenu");
         
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
@@ -65,14 +70,15 @@ public class TeleporterLogic : MonoBehaviour
         game.UI.SetCrosshairVisibility(false);
         game.UI.SetQuestVisiblity(false);
         game.UI.SetCursorVisibility(true);
+        game.UI.SetNetworkMenuVisibility(false);
 
-        game.mainMenu.SetupUIElements();
+        game.mainMenu.SetupMainmenuUIElements();
 
         yield return null;
     }
     IEnumerator LoadIntroCutScene()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("IntroCutScene");
+        AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("IntroCutScene");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
@@ -85,48 +91,50 @@ public class TeleporterLogic : MonoBehaviour
     }
     IEnumerator LoadGarageScene()
     {
-        if (game.LocalPlayer.inVehicle)
-            DontDestroyOnLoad(game.LocalPlayer.currentVehicle.gameObject);
-
         lastLocation = game.LocalPlayer.inVehicle ? game.LocalPlayer.currentVehicle.transform.position : game.LocalPlayer.transform.position;
         lastAngles = game.LocalPlayer.inVehicle ? game.LocalPlayer.currentVehicle.transform.eulerAngles : game.LocalPlayer.transform.eulerAngles;
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Garage");
+        sceneChanging = true;
+        Debug.Log("Calling server's rpc for garage from client!");
+        game.LocalPlayer.RPCLoadGarageFromCity();
 
-        // Wait until the asynchronous scene fully loads
-        while (!asyncLoad.isDone)
+        while (sceneChanging)
         {
             yield return null;
         }
+
+        Debug.Log("Garage should be loaded!");
+    
+        game.LocalPlayer.currentVehicle.StopMoving();
+        game.LocalPlayer.currentVehicle.transform.position = new Vector3(1.2f, 4, 2.1f);
+        game.LocalPlayer.currentVehicle.transform.eulerAngles = new Vector3(0, 0, 0);
+        game.LocalPlayer.GetOutVehicle();
 
         game.mainMenu.inMainMenu = false;
         game.LocalPlayer.inGameWorld = false;
         game.LocalPlayer.inGarage = true;
         game.UI.SetMinimapVisibility(false);
 
-        if (game.LocalPlayer.inVehicle)
-        {
-            game.LocalPlayer.currentVehicle.StopMoving();
-            game.LocalPlayer.currentVehicle.transform.position = new Vector3(1.2f, 1, 2.1f);
-            game.LocalPlayer.currentVehicle.transform.eulerAngles = new Vector3(0, 0, 0);
-            game.LocalPlayer.GetOutVehicle();        
-        }
         yield return null;
     }
     IEnumerator LoadCitySceneFromGarage()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("City");
+        sceneChanging = true;
+        Debug.Log("Calling server's rpc for city from client!");
+        game.LocalPlayer.RPCLoadCityFromGarage();
 
         // Wait until the asynchronous scene fully loads
-        while (!asyncLoad.isDone)
+        while (sceneChanging)
         {
             yield return null;
         }
 
-        game.LocalPlayer.inGameWorld = true;
-        game.LocalPlayer.inGarage = false;
-        game.mainMenu.inMainMenu = false;
-        game.UI.SetMinimapVisibility(true);
+        game.LocalPlayer.inGameWorld = false;
+        game.LocalPlayer.inGarage = true;
+        
+        game.UI.SetMinimapVisibility(false);
+        game.UI.SetCrosshairVisibility(true);
+        game.UI.SetQuestVisiblity(true);
 
         if (game.LocalPlayer.inVehicle)
         {
@@ -139,7 +147,7 @@ public class TeleporterLogic : MonoBehaviour
     }
     IEnumerator LoadCitySceneFromIntro()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("City");
+    /*     AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("City");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
@@ -149,28 +157,35 @@ public class TeleporterLogic : MonoBehaviour
 
         game.mainMenu.gameObject.SetActive(false);
         game.UI.SetCursorVisibility(false);
-        game.mainMenu.inMainMenu = false;
+        game.mainMenu.inMainMenu = false; */
 
-        /*game.LocalPlayer.inGameWorld = true;
+        game.network.networkManager.ServerManager.StartConnection();
+
+        while (!game.network.networkManager.IsServerStarted)
+        {
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(1);
+        
+        game.network.networkManager.ClientManager.StartConnection();
+
+        yield return new WaitForSeconds(1);
+
+        game.LocalPlayer.inGameWorld = true;
         game.LocalPlayer.inGarage = false;
-        
         game.LocalPlayer.inVehicle = false;
-        
-        game.UI.ToggleHotbar();
-        game.UI.SetMinimapVisibility(true);
-        game.UI.SetCrosshairVisibility(true);
-        game.UI.SetQuestVisiblity(true);
 
         var spawnPointPosition = GameObject.Find("Spawn").transform;
         game.LocalPlayer.transform.position = spawnPointPosition.position + Vector3.up;
         game.LocalPlayer.lookAngles.x = 180.0f;
 
-        game.quests.StartFirstQuest();*/
+        game.quests.StartFirstQuest();
         yield return null;
     }
     IEnumerator LoadCitySceneQuest2()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("City");
+        AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("City");
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)

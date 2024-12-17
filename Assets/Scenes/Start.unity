@@ -171,6 +171,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2216917980820127082, guid: 57f4ffe8acc737e478337afc8555ef8d, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268882588107780974, guid: 57f4ffe8acc737e478337afc8555ef8d, type: 3}
+      propertyPath: m_PixelPerfect
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2739930623038242213, guid: 57f4ffe8acc737e478337afc8555ef8d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623469467032995940, guid: 57f4ffe8acc737e478337afc8555ef8d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8186980982254823351, guid: 57f4ffe8acc737e478337afc8555ef8d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.75204

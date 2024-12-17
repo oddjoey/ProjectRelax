@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using UnityEngine.UI;
 using TMPro;
+using FishNet;
 
 public class UILogic : MonoBehaviour
 {
@@ -137,6 +138,9 @@ public class UILogic : MonoBehaviour
     }
     void Update()
     {
+        if (!game.network.IsConnectedToServer())
+            return;
+
         RPMTachoLogic();
 
         // Toggle Inventory
@@ -145,7 +149,7 @@ public class UILogic : MonoBehaviour
             inventoryToggle = true;
             SetCursorVisibility(!isInventoryMenuOpen);
             SetInventoryVisibility(!isInventoryMenuOpen);
-            //SetCrosshairVisibility(isCursorLocked && !game.LocalPlayer.inVehicle);
+            SetCrosshairVisibility(isCursorLocked && !game.LocalPlayer.inVehicle);
         }
 
         // Toggle Escape Menu
@@ -154,7 +158,7 @@ public class UILogic : MonoBehaviour
             menuToggle = true;
             SetCursorVisibility(!isEscapeMenuOpen);
             SetEscapeMenuVisibility(!isEscapeMenuOpen);
-            //SetCrosshairVisibility(isCursorLocked && !game.LocalPlayer.inVehicle);
+            SetCrosshairVisibility(isCursorLocked && !game.LocalPlayer.inVehicle);
         }
         
         if (!game.inputs.inventory)

@@ -97,14 +97,14 @@ public class SCC_Audio : MonoBehaviour {
         }
             
         //  Calculating the target volume depends on the throttle / brake.
-        float volume = car.engineOn ? car.IsPlayerInCar() ? Drivetrain.direction == 1 ? InputProcessor.inputs.throttleInput : InputProcessor.inputs.brakeInput : minimumVolume : 0;
+        float volume = car.engineOn ? car.IsLocalPlayerDriving() ? Drivetrain.direction == 1 ? InputProcessor.inputs.throttleInput : InputProcessor.inputs.brakeInput : minimumVolume : 0;
 
         //  Setting volumes.
         engineOnSource.volume = Mathf.Lerp(minimumVolume, maximumVolume, volume);
         engineOffSource.volume = Mathf.Lerp(maximumVolume, 0f, volume);
 
         //  Setting pitches.
-        engineOnSource.pitch = car.IsPlayerInCar() ? Mathf.Lerp(minimumPitch, maximumPitch, Drivetrain.currentEngineRPM / Drivetrain.maximumEngineRPM) : engineOnSource.pitch;
+        engineOnSource.pitch = car.IsLocalPlayerDriving() ? Mathf.Lerp(minimumPitch, maximumPitch, Drivetrain.currentEngineRPM / Drivetrain.maximumEngineRPM) : engineOnSource.pitch;
         engineOffSource.pitch = engineOnSource.pitch;
 
     }

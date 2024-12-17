@@ -6,7 +6,7 @@ using UnityEngine;
 public class MiniMapLogic : MonoBehaviour
 {
     GameLogic game;
-    Camera minimapCamera;
+    public Camera minimapCamera;
     public GameObject waypointObject;
     public GameObject pointerObject;
     void Start()
@@ -24,7 +24,6 @@ public class MiniMapLogic : MonoBehaviour
 
         if (waypointObject == null)
             return;
-
         var localPlayerMarkerPos = minimapCamera.WorldToScreenPoint(game.LocalPlayer.inVehicle ? game.LocalPlayer.currentVehicle.transform.position : game.LocalPlayer.transform.position);
         localPlayerMarkerPos.z = 0;
         var markerPos = minimapCamera.WorldToScreenPoint(waypointObject.transform.position);
@@ -53,7 +52,10 @@ public class MiniMapLogic : MonoBehaviour
     }
     void Update()
     {
-        //MoveCamera();
-        //UpdateMarkers();
+        if (!game.network.HasPlayerSpawned())
+            return;
+
+        MoveCamera();
+        UpdateMarkers();
     }
 }

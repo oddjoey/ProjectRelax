@@ -89,7 +89,7 @@ public class SCC_Drivetrain : MonoBehaviour {
     }
     private void FixedUpdate() {
 
-        if (!car.IsPlayerInCar())
+        if (!car.IsLocalPlayerDriving())
             return;
             
         if (car.engineOn)

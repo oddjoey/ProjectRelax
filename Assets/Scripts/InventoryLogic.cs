@@ -302,7 +302,7 @@ public class InventoryLogic : NetworkBehaviour
     }
     void Update()
     {
-        if (!base.IsOwner || !base.IsClientInitialized)
+        if (!base.IsOwner)
             return;
 
         Calculate();

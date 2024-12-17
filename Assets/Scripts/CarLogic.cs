@@ -1,8 +1,14 @@
+using FishNet.Connection;
+using FishNet.Object;
 using UnityEngine;
 
-public class CarLogic : MonoBehaviour
+public class CarLogic : NetworkBehaviour
 {
     GameLogic game;
+
+    // Networking
+    public NetworkObject networkObject;
+    public NetworkObject currentDriver;
     
     // Vehicle Systems
     public SCC_Drivetrain drivetrain;
@@ -33,10 +39,14 @@ public class CarLogic : MonoBehaviour
 
     // Layer Masks
     private int raycastEntranceMask;
-
-    void Start()
+    public bool IsLocalPlayerDriving()
+    {
+        return game != null && game.network.HasPlayerSpawned() && currentDriver == game.LocalPlayer.networkObject;
+    }
+    public override void OnStartClient()
     {
         game = GameLogic.instance;
+        networkObject = GetComponent<NetworkObject>();
         rigidbody = GetComponent<Rigidbody>();
         drivetrain = GetComponent<SCC_Drivetrain>();
         inputs = GetComponent<SCC_InputProcessor>();
@@ -61,11 +71,11 @@ public class CarLogic : MonoBehaviour
 
     void Update()
     {
-        if (IsPlayerInCar())
+        if (IsLocalPlayerDriving())
         {
             // Load Garage
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 1, raycastEntranceMask))
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 1, raycastEntranceMask) && !game.teleporter.sceneChanging)
             {
                 game.teleporter.LoadGarage();
             }           
@@ -82,13 +92,9 @@ public class CarLogic : MonoBehaviour
 
         ApplyCarLogic();
     }
-    public bool IsPlayerInCar()
-    {
-        return game.LocalPlayer.inVehicle && game.LocalPlayer.currentVehicle.gameObject == gameObject;
-    }
     void ApplyCarLogic()
     {
-        if (engineOn && IsPlayerInCar())
+        if (engineOn && IsLocalPlayerDriving())
             ApplyBrakeLights();
 
         // Should car be on or off

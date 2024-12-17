@@ -1,14 +1,39 @@
 using System;
+using System.Collections.Generic;
 using FishNet.Connection;
 using FishNet.Managing;
 using FishNet.Managing.Scened;
 using FishNet.Object;
+using FishySteamworks;
+using Steamworks;
 using UnityEngine;
 
 public class NetworkLogic : MonoBehaviour
 {
     GameLogic game;
     public NetworkManager networkManager;
+    public List<CSteamID> steamFriends;
+    public void RefreshSteamFriends()
+    {
+        if (SteamManager.Initialized)
+        {
+            int numOfFriends = SteamFriends.GetFriendCount(EFriendFlags.k_EFriendFlagImmediate);
+            for (int i = 0; i < numOfFriends; i++)
+            {
+                CSteamID friendSteamID = SteamFriends.GetFriendByIndex(i, EFriendFlags.k_EFriendFlagImmediate);
+                steamFriends.Add(friendSteamID);
+            }
+        }
+    }
+    public bool IsConnectedToServer()
+    {
+        return networkManager.ClientManager.Connection.IsActive;
+    }
+    public bool HasPlayerSpawned()
+    {
+        // Our server has given ownership of the player object to our client.
+        return networkManager.ClientManager.Connection.FirstObject != null;
+    }
     public void OnStartServer()
     {
         Debug.Log("Server: Started!");
@@ -19,15 +44,15 @@ public class NetworkLogic : MonoBehaviour
         SceneLoadData sld = new SceneLoadData("City");
 
         // Unload all current scenes that the client had loaded and replace with ours.
-        // https://fish-networking.gitbook.io/docs/manual/guides/scene-management/loading-scenes#replace-all
+        // https://fish-networking.gitbook.io /docs/manual/guides/scene-management/loading-scenes#replace-all
         sld.ReplaceScenes = ReplaceOption.All;
         networkManager.SceneManager.LoadGlobalScenes(sld);
     }
-    // When a client loads the start scene.
-    private void SceneManager_OnClientLoadedStartScenes(NetworkConnection conn, bool asServer)
+    // Called when a client loads the global scenes, or if none, then their starting scene.
+    private void OnClientLoadedStartScenes(NetworkConnection conn, bool asServer)
     {
         // Who is running this function ?
-        if (asServer)
+        if (asServer) // Server side stuff here related to client joining scene.
         {
             Debug.Log("Server: Client[" + conn.ClientId + "] loaded start scene");
 
@@ -43,7 +68,7 @@ public class NetworkLogic : MonoBehaviour
             NetworkObject nObj = networkManager.GetPooledInstantiated(game.playerPrefab, true);
             networkManager.ServerManager.Spawn(nObj, conn);
         }
-        else
+        else // Client has spawned into the scene, handle client stuff here. Called before server's OnClientLoadedStartScenes
         {
             Debug.Log("Client[" + conn.ClientId + "]: loaded start scene");
 
@@ -55,14 +80,31 @@ public class NetworkLogic : MonoBehaviour
             game.UI.SetCrosshairVisibility(true);
             game.UI.SetQuestVisiblity(true);
             game.UI.SetCursorVisibility(false);
+
+            foreach (var cam in Camera.allCameras)
+                cam.enabled = false;
         }
+    }
+    // https://firstgeargames.com/FishNet/api/api/FishNet.Managing.Scened.SceneLoadData.html#FishNet_Managing_Scened_SceneLoadData_GetFirstLookupScene lol
+    private void OnLoadStart(SceneLoadStartEventArgs args)
+    {
+        string sceneName = args.QueueData.SceneLoadData.SceneLookupDatas[0].Name;
+        Debug.Log("OnLoadStart: " + sceneName);
+    }
+    private void OnLoadEnd(SceneLoadEndEventArgs args)
+    {
+        string sceneName = args.QueueData.SceneLoadData.SceneLookupDatas[0].Name;
+        Debug.Log("OnLoadEnd: " + sceneName);
+        game.teleporter.sceneChanging = false;
     }
     void Start()
     {
         game = GameLogic.instance;
         networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
 
-        networkManager.SceneManager.OnClientLoadedStartScenes += SceneManager_OnClientLoadedStartScenes;
+        networkManager.SceneManager.OnClientLoadedStartScenes += OnClientLoadedStartScenes;
+        networkManager.SceneManager.OnLoadStart += OnLoadStart;
+        networkManager.SceneManager.OnLoadEnd += OnLoadEnd;
     }
     void Update()
     {

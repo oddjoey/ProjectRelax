@@ -3,8 +3,8 @@
     <ui:VisualElement style="flex-grow: 1; visibility: visible; display: flex;">
         <ui:VisualElement style="flex-grow: 1; width: 1001px; padding-left: 73px;">
             <ui:Label tabindex="-1" text="ProjectRelaX!" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Title" style="font-size: 150px; -unity-text-align: upper-center; top: 97px; color: rgb(255, 255, 255); -unity-font-style: italic;" />
-            <ui:Button text="New" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NewButton" class="button" />
-            <ui:Button text="Load" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LoadButton" class="button" />
+            <ui:Button text="Host" parse-escape-sequences="true" display-tooltip-when-elided="true" name="HostButton" class="button" />
+            <ui:Button text="Join" parse-escape-sequences="true" display-tooltip-when-elided="true" name="JoinButton" class="button" />
             <ui:Button text="Guide" parse-escape-sequences="true" display-tooltip-when-elided="true" name="GuideButton" class="button" />
             <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SettingsButton" class="button" />
             <ui:Button text="Quit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="QuitButton" class="button" />

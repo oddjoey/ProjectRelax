@@ -1,0 +1,28 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:VisualElement style="flex-grow: 1;">
+        <engine:VisualElement name="VisualElement" style="flex-grow: 1; padding-top: 88px; padding-right: 88px; padding-bottom: 88px; padding-left: 88px; align-self: auto; align-items: center; flex-direction: row;">
+            <engine:VisualElement name="VisualElement" style="flex-grow: 1; align-items: stretch; align-self: stretch; background-color: rgba(77, 77, 77, 0.81); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px;">
+                <engine:VisualElement name="VisualElement" style="flex-grow: 1; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; background-color: rgba(0, 0, 0, 0.77); color: rgb(27, 27, 27); flex-direction: column;">
+                    <engine:VisualElement style="flex-grow: 1; flex-direction: row;">
+                        <engine:VisualElement name="VisualElement" style="flex-grow: 1; max-width: 454px;">
+                            <engine:Label text="Friends" style="color: rgb(255, 255, 255); font-size: 40px; -unity-text-align: upper-center;" />
+                            <engine:ScrollView name="FriendsList" />
+                        </engine:VisualElement>
+                        <engine:VisualElement style="flex-grow: 1;">
+                            <engine:Label text="Info" name="Label" style="color: rgb(255, 255, 255); font-size: 40px; -unity-text-align: upper-center;" />
+                            <engine:VisualElement style="flex-grow: 1;">
+                                <engine:Label text="Name: " name="FriendName" style="color: rgb(255, 255, 255); font-size: 23px; align-self: auto; align-items: auto; align-content: auto; overflow: visible; width: 300px;" />
+                                <engine:Label text="SteamID: " name="FriendSteamID" style="color: rgb(255, 255, 255); font-size: 23px; width: 300px;" />
+                            </engine:VisualElement>
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                    <engine:VisualElement style="flex-grow: 1; flex-direction: row; align-self: flex-start; align-items: auto; align-content: auto; max-height: 0; margin-top: 13px; margin-right: 13px; margin-bottom: 13px; margin-left: 13px; padding-top: 6px; padding-right: 6px; padding-bottom: 6px; padding-left: 6px; min-height: 48px;">
+                        <engine:Button text="Back" name="BackButton" style="align-items: auto; align-self: flex-start;" />
+                        <engine:Button text="Join" name="FriendJoinButton" style="color: rgb(0, 0, 0); justify-content: flex-start; align-content: auto; align-self: flex-start; left: 384px;" />
+                    </engine:VisualElement>
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="VisualElement" style="flex-grow: 1; align-items: stretch; align-self: stretch;" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

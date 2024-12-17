@@ -15,8 +15,8 @@ EditorBuildSettings:
     path: Assets/Scenes/IntroCutScene.unity
     guid: a933127743ffde94b8024999ca6e8023
   - enabled: 1
-    path: Assets/Scenes/City.unity
-    guid: bae255f10018acd43b856f569c596d25
+    path: Assets/Scenes/city.unity
+    guid: 276514c3e4b181449af1c43475dd44ac
   - enabled: 1
     path: Assets/Scenes/Garage.unity
     guid: 3340f5f4df053c74ea586b5b7fc90ae1

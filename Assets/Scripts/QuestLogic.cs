@@ -23,10 +23,12 @@ public class QuestLogic : MonoBehaviour
     {
         questNumber = 1;
 
-        var car = Instantiate(game.carPrefab);
-        car.name = "Car";
-        car.transform.position = new Vector3(29, 2, 32);
-        car.transform.localEulerAngles = new Vector3(0, -90, 0);
+        game.LocalPlayer.RPCSpawnCar();
+
+        while (!GameObject.Find("Car"))
+            yield return null;
+
+        GameObject car = GameObject.Find("Car");
 
         questName.text = "Customize Car";
         questInfo.text = "Get Into Car";

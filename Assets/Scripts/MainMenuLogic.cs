@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Steamworks;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,18 +9,45 @@ public class MainMenuLogic : MonoBehaviour
     GameLogic game;
     
     private UIDocument uIDocument;
-    private Button newButton;
-    private Button loadButton;
-    private Button guideButton;
-    private Button settingsButton;
-    private Button quitButton;
-    private Button backButton;
-    private Slider volumeSlider;
-    private Slider sensitivitySlider;
+    private Button mainMenuHostButton;
+    private Button mainMenuJoinButton;
+    private Button mainMenuGuideButton;
+    private Button mainMenuSettingsButton;
+    private Button mainMenuQuitButton;
+    private Button menuBackButton;
+    private Slider settingsVolumeSlider;
+    private Slider settingsSensitivitySlider;
+    private ScrollView friendsList;
+    private Label friendNameLabel;
+    private Label friendSteamIDLabel;
+    private Button friendJoinButton;
+    private CSteamID currentSelectedFriend;
     [SerializeField] private VisualTreeAsset mainMenuVisualTree;
     [SerializeField] private VisualTreeAsset guideVisualTree;
     [SerializeField] private VisualTreeAsset settingsVisualTree;
+    [SerializeField] private VisualTreeAsset friendsVisualtree;
     public bool inMainMenu = true;
+
+    // https://github.com/rlabrecque/Steamworks.NET-Test/blob/master/Assets/Scripts/SteamUtilsTest.cs
+    private Texture2D GetSteamImageAsTexture2D(int iImage) {
+    Texture2D ret = null;
+    uint ImageWidth;
+    uint ImageHeight;
+    bool bIsValid = SteamUtils.GetImageSize(iImage, out ImageWidth, out ImageHeight);
+
+    if (bIsValid) {
+        byte[] Image = new byte[ImageWidth * ImageHeight * 4];
+
+        bIsValid = SteamUtils.GetImageRGBA(iImage, Image, (int)(ImageWidth * ImageHeight * 4));
+        if (bIsValid) {
+            ret = new Texture2D((int)ImageWidth, (int)ImageHeight, TextureFormat.RGBA32, false, true);
+            ret.LoadRawTextureData(Image);
+            ret.Apply();
+        }
+    }
+
+    return ret;
+}
     public void Hide()
     {
         uIDocument.rootVisualElement.style.display = DisplayStyle.None;
@@ -32,85 +60,119 @@ public class MainMenuLogic : MonoBehaviour
         Whenever we load a new scene, variables have new addresses so we have to find them again
         - K
     */
-    public void SetupUIElements()
+    public void SetupMainmenuUIElements()
     {
-        newButton = uIDocument.rootVisualElement.Q<Button>("NewButton");
-        loadButton = uIDocument.rootVisualElement.Q<Button>("LoadButton");
-        guideButton = uIDocument.rootVisualElement.Q<Button>("GuideButton");
-        settingsButton = uIDocument.rootVisualElement.Q<Button>("SettingsButton");
-        quitButton = uIDocument.rootVisualElement.Q<Button>("QuitButton");
+        mainMenuHostButton = uIDocument.rootVisualElement.Q<Button>("HostButton");
+        mainMenuJoinButton = uIDocument.rootVisualElement.Q<Button>("JoinButton");
+        mainMenuGuideButton = uIDocument.rootVisualElement.Q<Button>("GuideButton");
+        mainMenuSettingsButton = uIDocument.rootVisualElement.Q<Button>("SettingsButton");
+        mainMenuQuitButton = uIDocument.rootVisualElement.Q<Button>("QuitButton");
 
-        newButton.RegisterCallback<ClickEvent>(OnNewButton);
-        loadButton.RegisterCallback<ClickEvent>(OnLoadButton);
-        guideButton.RegisterCallback<ClickEvent>(OnGuideButton);
-        settingsButton.RegisterCallback<ClickEvent>(OnSettingsButton);
-        quitButton.RegisterCallback<ClickEvent>(OnQuitButton);
+        mainMenuHostButton.RegisterCallback<ClickEvent>(OnHostButton);
+        mainMenuJoinButton.RegisterCallback<ClickEvent>(OnJoinButton);
+        mainMenuGuideButton.RegisterCallback<ClickEvent>(OnGuideButton);
+        mainMenuSettingsButton.RegisterCallback<ClickEvent>(OnSettingsButton);
+        mainMenuQuitButton.RegisterCallback<ClickEvent>(OnQuitButton);
     }
     void Start()
     {
         game = GameLogic.instance;
         uIDocument = GetComponent<UIDocument>();
 
-        SetupUIElements();
+        SetupMainmenuUIElements();
     }
     void Update()
     {
         if (uIDocument.visualTreeAsset == settingsVisualTree)
         {
-            game.settings.volume = volumeSlider.value;
-            game.settings.sensitivity = sensitivitySlider.value;
+            game.settings.volume = settingsVolumeSlider.value;
+            game.settings.sensitivity = settingsSensitivitySlider.value;
         }
     }
-    void OnNewButton(ClickEvent clickEvent)
+    void OnHostButton(ClickEvent clickEvent)
     {
-        game.teleporter.LoadIntro();
+        //game.teleporter.LoadIntro();
+        game.teleporter.LoadCityFromIntro();
     }
-    void OnLoadButton(ClickEvent clickEvent)
+    void OnJoinFriendButton(ClickEvent clickEvent)
     {
-        game.teleporter.LoadCityQuest1();
-        /*if (!game.settings.DataExists())
-            return;
+        game.network.networkManager.ClientManager.StartConnection(currentSelectedFriend.ToString());
+    }
+    void OnJoinButton(ClickEvent clickEvent)
+    {
+        uIDocument.visualTreeAsset = friendsVisualtree;
+        friendsList = uIDocument.rootVisualElement.Q<ScrollView>("FriendsList");
+        menuBackButton = uIDocument.rootVisualElement.Q<Button>("BackButton");
+        menuBackButton.RegisterCallback<ClickEvent>(OnBackButton);
+        friendNameLabel = uIDocument.rootVisualElement.Q<Label>("FriendName");
+        friendSteamIDLabel = uIDocument.rootVisualElement.Q<Label>("FriendSteamID");
+        friendJoinButton = uIDocument.rootVisualElement.Q<Button>("FriendJoinButton");
+        friendJoinButton.RegisterCallback<ClickEvent>(OnJoinFriendButton);
+        currentSelectedFriend = CSteamID.Nil;
+        friendNameLabel.text = "";
+        friendSteamIDLabel.text = "";
+        friendJoinButton.style.display = DisplayStyle.None;
 
-        game.settings.LoadPlayerData();
-
-        switch (game.quests.questNumber)
+        if (SteamManager.Initialized)
         {
-            case 0:
-                game.teleporter.LoadIntro();
-            break;
-            case 1:
-                game.teleporter.LoadCityQuest1();
-            break;
-            case 2:
-                game.teleporter.LoadCityQuest2();
-            break;
-        }*/
+            game.network.RefreshSteamFriends();
+            foreach (var friendSteamID in game.network.steamFriends)
+            {
+                string friendDisplayName = SteamFriends.GetFriendPersonaName(friendSteamID);
+                var friendAvatarTexture = GetSteamImageAsTexture2D(SteamFriends.GetSmallFriendAvatar(friendSteamID));
+
+                Button friend = new Button();
+                friend.style.flexDirection = FlexDirection.Row;
+                friend.clicked += () => 
+                {
+                    currentSelectedFriend = friendSteamID;
+                    friendNameLabel.text = "Name: " +  friendDisplayName;
+                    friendSteamIDLabel.text = "SteamID: " + friendSteamID;
+                    friendJoinButton.style.display = DisplayStyle.Flex; 
+                };
+
+                Image avatar = new Image();
+                avatar.image = friendAvatarTexture;
+                friend.Add(avatar);
+
+                Label name = new Label(friendDisplayName);
+                friend.Add(name);
+
+                friendsList.Add(friend);
+            }
+        }
     }
     void OnBackButton(ClickEvent clickEvent)
     {
-        backButton.UnregisterCallback<ClickEvent>(OnBackButton);
+        menuBackButton.UnregisterCallback<ClickEvent>(OnBackButton);
         uIDocument.visualTreeAsset = mainMenuVisualTree;
-        SetupUIElements();
+        SetupMainmenuUIElements();
     }
     void OnGuideButton(ClickEvent clickEvent)
     {
         uIDocument.visualTreeAsset = guideVisualTree;
-        backButton = uIDocument.rootVisualElement.Q<Button>("ReturnButton");
-        backButton.RegisterCallback<ClickEvent>(OnBackButton);
+        menuBackButton = uIDocument.rootVisualElement.Q<Button>("BackButton");
+        menuBackButton.RegisterCallback<ClickEvent>(OnBackButton);
     }
     void OnSettingsButton(ClickEvent clickEvent)
     {
         uIDocument.visualTreeAsset = settingsVisualTree;
-        backButton = uIDocument.rootVisualElement.Q<Button>("ReturnButton");
-        backButton.RegisterCallback<ClickEvent>(OnBackButton);
+        menuBackButton = uIDocument.rootVisualElement.Q<Button>("BackButton");
+        menuBackButton.RegisterCallback<ClickEvent>(OnBackButton);
 
-        volumeSlider = uIDocument.rootVisualElement.Q<Slider>("VolumeSlider");
-        sensitivitySlider = uIDocument.rootVisualElement.Q<Slider>("SensitivitySlider");
-        volumeSlider.value = game.settings.volume;
-        sensitivitySlider.value = game.settings.sensitivity;
+        settingsVolumeSlider = uIDocument.rootVisualElement.Q<Slider>("VolumeSlider");
+        settingsSensitivitySlider = uIDocument.rootVisualElement.Q<Slider>("SensitivitySlider");
+
+        settingsVolumeSlider.value = game.settings.volume;
+        settingsSensitivitySlider.value = game.settings.sensitivity;
     }
     void OnQuitButton(ClickEvent clickEvent)
     {
+        if (game.network.networkManager.IsClientStarted)
+            game.network.networkManager.ClientManager.StopConnection();
+        if (game.network.networkManager.IsServerStarted)
+            game.network.networkManager.ServerManager.StopConnection(true);
+
         // https://stackoverflow.com/questions/70437401/cannot-finish-the-game-in-unity-using-application-quit
         #if UNITY_STANDALONE
             Application.Quit();

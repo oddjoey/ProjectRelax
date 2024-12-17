@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using FishNet.Managing;
 using FishNet.Object;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class GameLogic : MonoBehaviour
     public static GameLogic instance;
     // Prefabs
     [SerializeField] public NetworkObject playerPrefab;
-    public GameObject carPrefab;
+    public NetworkObject carPrefab;
     // Systems
     public InputManager inputs;
     public NetworkLogic network;
@@ -20,10 +21,13 @@ public class GameLogic : MonoBehaviour
     public MiniMapLogic miniMap;
     public QuestLogic quests;
 
-    public PlayerLogic LocalPlayer 
+    public NetworkedPlayer LocalPlayer
     {
         get {
-            return null;
+            if (!network || !network.HasPlayerSpawned())
+                return null;
+
+            return network.networkManager.ClientManager.Connection.FirstObject.GetComponent<NetworkedPlayer>();
         }
     }
 

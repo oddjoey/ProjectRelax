@@ -74,7 +74,7 @@ public class CutSceneLogic : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(2);
 
-        game.teleporter.LoadCityQuest1();
+        game.teleporter.LoadCityFromIntro();
 
         yield return null;
     }

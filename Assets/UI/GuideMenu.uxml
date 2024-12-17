@@ -1,9 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 1;">
-        <ui:VisualElement name="VisualElement" style="flex-grow: 1; margin-top: 42px; margin-right: 42px; margin-bottom: 42px; margin-left: 42px; width: 754px; background-color: rgba(0, 0, 0, 0.82); padding-top: 13px; padding-right: 13px; padding-bottom: 13px; padding-left: 13px;">
-            <ui:Label tabindex="-1" text="&#x9;Its your 16th birthday, and your mom gives you the keys to your first car! Explore the world,&#10; modify/upgrade your project, and most importantly, relax!" parse-escape-sequences="true" display-tooltip-when-elided="true" style="height: 73px; width: 721px; background-color: rgba(0, 0, 0, 0); color: rgb(255, 255, 255);" />
-            <ui:Label tabindex="-1" text="Player Controls:&#10;&#x9;Movement: WASD or Gamepad Left Stick&#10;&#x9;Look: Mouse or Gamepad Right Stick&#10;&#x9;Inventory: Tab&#10;&#x9;Jump: Space or Gamepad Button South (Xbox: A PS: X)&#10;&#x9;Pause: Escape or Gamepad Button Start&#10;&#10;Vehicle Controls:&#10;&#x9;Steering: A &amp; D or Gamepad Left Stick&#10;&#x9;Accelerate: W or Gamepad Right Trigger&#10;&#x9;Brake: S or Gamepad Left Trigger&#10;&#x9;Handbrake: Space or Gamepad Button South (Xbox: A PS: X)" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" style="color: rgb(255, 255, 255);" />
-            <ui:Button text="Return" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ReturnButton" style="top: 457px; width: 239px; left: 20px;" />
-        </ui:VisualElement>
-    </ui:VisualElement>
-</ui:UXML>

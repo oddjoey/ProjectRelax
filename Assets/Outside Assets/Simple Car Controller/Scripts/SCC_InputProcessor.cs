@@ -1,7 +1,7 @@
 //----------------------------------------------
 //            Simple Car Controller
 //
-// Copyright © 2014 - 2023 BoneCracker Games
+// Copyright ï¿½ 2014 - 2023 BoneCracker Games
 // http://www.bonecrackergames.com
 //
 //----------------------------------------------
@@ -21,9 +21,15 @@ public class SCC_InputProcessor : MonoBehaviour {
     public bool receiveInputsFromInputManager = true;       //  Receive inputs directly from the SCC_InputManager.
     public bool smoothInputs = true;        //  Smoothly lerp the inputs?
     public float smoothingFactor = 5f;      //  Smoothing factor.
-
+    CarLogic car;
+    void Start()
+    {
+        car = GetComponent<CarLogic>();
+    }
     private void Update() {
-
+        if (!car.IsLocalPlayerDriving())
+            return;
+            
         //  Creating new inputs if doesn't exists yet.
         if (inputs == null)
             inputs = new SCC_Inputs();
